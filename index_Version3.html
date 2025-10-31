@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Radiarc — Graphic Jewel</title>
+<style>
+  :root{ --bg:#0b1020; --panel:#0f1724; --muted:#9aa6bf; --accent:#58d0ff; --glass: rgba(255,255,255,0.04); }
+  html,body{ height:100%; margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial; background:linear-gradient(160deg,#061020 0%, #081525 60%); color:#e6eef8; }
+  .app{ display:flex; gap:16px; height:100vh; padding:20px; box-sizing:border-box; align-items:center; justify-content:center; }
+  .canvas-wrap{ background:var(--glass); border-radius:12px; padding:12px; box-shadow: 0 6px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.03); }
+  canvas{ display:block; background: radial-gradient(1200px 800px at 20% 10%, rgba(15,25,40,0.4), transparent 10%), transparent; border-radius:8px; }
+  .panel{ width:360px; padding:16px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: 0 8px 24px rgba(2,6,23,0.5); }
+  .row{ display:flex; gap:8px; align-items:center; margin-bottom:10px; }
+  label{ width:120px; font-size:13px; color:var(--muted); }
+  input[type=range]{ flex:1; }
+  input[type=number]{ width:80px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:inherit; padding:6px 8px; border-radius:6px; }
+  .controls{ margin-top:8px; display:flex; gap:8px; flex-wrap:wrap; }
+  button{ background:linear-gradient(180deg,var(--accent),#2ca6d6); border:none; color:#04202a; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+  button.ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.04); }
+  .small{ padding:6px 8px; font-size:13px; }
+  .footer{ margin-top:12px; font-size:12px; color:var(--muted); }
+  .preview-row{ display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+  input[type=color]{ width:44px; height:36px; padding:0; border-radius:6px; border:none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="canvas-wrap">
+    <canvas id="canvas" width="900" height="700" aria-label="Radiarc canvas"></canvas>
+  </div>
+
+  <div class="panel" aria-label="Controls">
+    <h3 style="margin:0 0 10px 0">Radiarc — Articulated Radii Jewel</h3>
+
+    <div class="row">
+      <label for="R">Base Radius (R)</label>
+      <input id="R" type="range" min="20" max="600" value="220">
+      <input id="Rnum" type="number" min="20" max="600" value="220">
+    </div>
+
+    <div class="row">
+      <label for="r">Articulation (r)</label>
+      <input id="r" type="range" min="1" max="300" value="75">
+      <input id="rnum" type="number" min="1" max="300" value="75">
+    </div>
+
+    <div class="row">
+      <label for="d">Arm Offset (d)</label>
+      <input id="d" type="range" min="0" max="400" value="140">
+      <input id="dnum" type="number" min="0" max="400" value="140">
+    </div>
+
+    <div class="row">
+      <label for="strokes">Layers</label>
+      <input id="strokes" type="range" min="1" max="36" value="8">
+      <input id="strokesnum" type="number" min="1" max="36" value="8">
+    </div>
+
+    <div class="preview-row">
+      <label style="width:auto">Color</label>
+      <input id="color" type="color" value="#58d0ff">
+      <label style="width:80px; margin-left:8px">Line width</label>
+      <input id="lw" type="range" min="0.2" max="8" step="0.1" value="1.2">
+    </div>
+
+    <div class="row">
+      <label for="animate">Animate</label>
+      <input id="animate" type="checkbox" checked>
+      <label style="width:90px; margin-left:6px">Speed</label>
+      <input id="speed" type="range" min="0.1" max="6" step="0.1" value="1.0">
+    </div>
+
+    <div class="controls">
+      <button id="redraw" class="small ghost">Redraw</button>
+      <button id="randomize" class="small">Randomize</button>
+      <button id="clear" class="small ghost">Clear</button>
+      <button id="export" class="small">Export PNG</button>
+    </div>
+
+    <div class="footer">Radiarc = articulated radii producing delicate jewel-like forms. Try changing articulation and arm offset for distinctive ribs and petals.</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // Helpers
+  const qs = id => document.getElementById(id);
+  const canvas = qs('canvas');
+  const ctx = canvas.getContext('2d', { alpha: true });
+  let W = canvas.width, H = canvas.height;
+  const origin = { x: W/2, y: H/2 };
+
+  // Controls
+  const R = qs('R'), Rnum = qs('Rnum');
+  const r = qs('r'), rnum = qs('rnum');
+  const d = qs('d'), dnum = qs('dnum');
+  const strokes = qs('strokes'), strokesnum = qs('strokesnum');
+  const color = qs('color'), lw = qs('lw');
+  const animate = qs('animate'), speed = qs('speed');
+  const redraw = qs('redraw'), randomize = qs('randomize'), clearBtn = qs('clear'), exportBtn = qs('export');
+
+  // Sync range + number inputs
+  function bindRange(rangeEl, numEl) {
+    rangeEl.addEventListener('input', () => { numEl.value = rangeEl.value; drawOnce(); });
+    numEl.addEventListener('input', () => { rangeEl.value = numEl.value; drawOnce(); });
+  }
+  bindRange(R, Rnum); bindRange(r, rnum); bindRange(d, dnum); bindRange(strokes, strokesnum);
+
+  // Radiarc math (articulated-radii variants)
+  function radiarcPoints(Rv, rv, dv, steps, isEpi=false) {
+    const points = [];
+    const R = +Rv, r = +rv, d = +dv;
+    const gcd = (a,b) => b === 0 ? a : gcd(b, a % b);
+    const k = gcd(Math.round(r), Math.round(R));
+    const maxTheta = Math.PI * 2 * (r / k);
+    const samples = Math.max(1200, Math.round(4000 * Math.abs(r / k)));
+    for (let i = 0; i <= samples; i++) {
+      const t = i / samples * maxTheta;
+      let x, y;
+      if (isEpi) {
+        x = (R + r) * Math.cos(t) - d * Math.cos(((R + r)/r) * t);
+        y = (R + r) * Math.sin(t) - d * Math.sin(((R + r)/r) * t);
+      } else {
+        x = (R - r) * Math.cos(t) + d * Math.cos(((R - r)/r) * t);
+        y = (R - r) * Math.sin(t) - d * Math.sin(((R - r)/r) * t);
+      }
+      points.push({x,y});
+    }
+    return points;
+  }
+
+  // Draw routine (supports multiple rotated layers)
+  function drawRadiarc(opts) {
+    const { Rv, rv, dv, layerCount, hueColor, lineWidth, rotateStep } = opts;
+    ctx.save();
+    ctx.translate(origin.x, origin.y);
+
+    for (let s = 0; s < layerCount; s++) {
+      ctx.save();
+      const angle = s * rotateStep;
+      ctx.rotate(angle);
+
+      const pts = radiarcPoints(Rv, rv, dv, 1);
+      ctx.beginPath();
+      if (pts.length > 0) {
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) {
+          ctx.lineTo(pts[i].x, pts[i].y);
+        }
+      }
+
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.strokeStyle = mixColor(hueColor, s / Math.max(1, layerCount));
+      ctx.lineWidth = Math.max(0.2, lineWidth);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    ctx.restore();
+  }
+
+  // Color mixing to produce layered jewel effect
+  function mixColor(hex, t) {
+    const c = hex.replace('#','');
+    const r = parseInt(c.substr(0,2),16), g = parseInt(c.substr(2,2),16), b = parseInt(c.substr(4,2),16);
+    const rr = Math.round(r + (255 - r) * 0.35 * t);
+    const gg = Math.round(g + (255 - g) * 0.35 * t);
+    const bb = Math.round(b + (255 - b) * 0.35 * t);
+    return `rgba(${rr},${gg},${bb},${0.85 - 0.4*t})`;
+  }
+
+  // Clear with subtle background
+  function clearCanvas() {
+    ctx.clearRect(0,0,W,H);
+    const g = ctx.createRadialGradient(origin.x - W*0.2, origin.y - H*0.3, 0, origin.x, origin.y, Math.max(W,H));
+    g.addColorStop(0, 'rgba(255,255,255,0.02)');
+    g.addColorStop(1, 'rgba(0,0,0,0.12)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  // Single redraw
+  function drawOnce() {
+    clearCanvas();
+    const opts = {
+      Rv: +R.value,
+      rv: +r.value,
+      dv: +d.value,
+      layerCount: +strokes.value,
+      hueColor: color.value,
+      lineWidth: +lw.value,
+      rotateStep: (Math.PI * 2 / Math.max(1, +strokes.value)) * 0.5
+    };
+    drawRadiarc(opts);
+  }
+
+  // Animation loop
+  let last = 0;
+  let tAcc = 0;
+  function animateLoop(ts) {
+    if (!animate.checked) return;
+    const dt = (ts - last) / 1000 || 0;
+    last = ts;
+    tAcc += dt * (+speed.value);
+
+    const baseR = +R.value;
+    const baseRMod = baseR * (0.98 + 0.04 * Math.sin(tAcc * 0.6));
+    const opts = {
+      Rv: baseRMod,
+      rv: +r.value,
+      dv: +d.value * (0.96 + 0.08 * Math.cos(tAcc * 0.9)),
+      layerCount: +strokes.value,
+      hueColor: color.value,
+      lineWidth: +lw.value,
+      rotateStep: (Math.PI * 2 / Math.max(1, +strokes.value)) * (0.4 + 0.6 * Math.sin(tAcc * 0.3))
+    };
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(6,12,24,0.06)';
+    ctx.fillRect(0,0,W,H);
+    drawRadiarc(opts);
+
+    if (animate.checked) requestAnimationFrame(animateLoop);
+  }
+
+  // Wire buttons
+  redraw.addEventListener('click', () => { drawOnce(); });
+  clearBtn.addEventListener('click', () => { clearCanvas(); });
+  randomize.addEventListener('click', () => {
+    const Rv = Math.round(80 + Math.random() * 380);
+    const rv = Math.round(6 + Math.random() * 220);
+    const dv = Math.round(10 + Math.random() * Math.min(400, Rv));
+    const st = Math.floor(1 + Math.random() * 24);
+    R.value = Rnum.value = Rv;
+    r.value = rnum.value = rv;
+    d.value = dnum.value = dv;
+    strokes.value = strokesnum.value = st;
+    color.value = '#'+(Math.floor(Math.random()*0xFFFFFF).toString(16).padStart(6,'0'));
+    lw.value = (0.6 + Math.random() * 4).toFixed(1);
+    drawOnce();
+  });
+
+  exportBtn.addEventListener('click', () => {
+    const scale = 2;
+    const tmp = document.createElement('canvas');
+    tmp.width = W * scale; tmp.height = H * scale;
+    const tctx = tmp.getContext('2d');
+    tctx.fillStyle = getComputedStyle(document.body).backgroundColor || '#061020';
+    tctx.fillRect(0,0,tmp.width,tmp.height);
+    tctx.drawImage(canvas, 0, 0, tmp.width, tmp.height);
+    tmp.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'radiarc-jewel.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+  });
+
+  // Animation toggle
+  animate.addEventListener('change', () => {
+    if (animate.checked) {
+      last = performance.now();
+      requestAnimationFrame(animateLoop);
+    }
+  });
+
+  // initial draw
+  clearCanvas();
+  drawOnce();
+  if (animate.checked) {
+    last = performance.now();
+    requestAnimationFrame(animateLoop);
+  }
+
+  // Keyboard shortcuts
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      e.preventDefault(); exportBtn.click();
+    } else if (e.key === 'r') {
+      randomize.click();
+    } else if (e.key === 'c') {
+      clearBtn.click();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
