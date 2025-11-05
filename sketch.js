@@ -1,36 +1,35 @@
-// Updated sketch.js implementing:
-// - pixel visit map (safe erasure for overlapping trail)
-// - correct vector delta math for multiple snakes
-// - opposite motion vector logic for horizontal line pattern
-// - trail stores pixelSize for correct erasure
-// - instant trail shrinkage using .splice()
-// - setPixel and erasure are snapped to rounded pixel coordinates (prevents "dust")
-// - "Clear & Reset" button support, wired from HTML
+// Articulated snake, always centered inside fixed margin regardless of size
 
-const canvasSize = 800;
-const centerX = canvasSize / 2;
-const centerY = canvasSize / 2;
+const MARGIN = 40;     // Margin on each edge, in pixels
 const vectorCount = 8;
 
 let vectors = [];
 let trail = [];
 let maxTrailLength = 300;
-let pixelVisits = {}; // maps "x_y" -> visit count
 
+function roundXY(x, y) {
+    return { x: Math.round(x), y: Math.round(y) };
+}
 function zParseInt(val, fallback) {
     let n = parseInt(val, 10);
     return isNaN(n) ? fallback : n;
 }
 
 function setup() {
-    const canvas = createCanvas(canvasSize, canvasSize);
+    const parentDiv = document.getElementById('p5canvas');
+    const cs = window.getComputedStyle(parentDiv);
+    const widthVal = parseInt(cs.width) || 800;
+    const heightVal = parseInt(cs.height) || 800;
+    const canvas = createCanvas(widthVal, heightVal);
     canvas.parent('p5canvas');
     pixelDensity(1);
     background(30);
 
-    // Store pixel visits
-    pixelVisits = {};
+    resetVectorsAndTrail();
+    document.getElementById('clearBtn').onclick = clearAndReset;
+}
 
+function resetVectorsAndTrail() {
     vectors = [];
     for (let i = 0; i < vectorCount; i++) {
         let radius = zParseInt(document.getElementById(`length${i}`).value, 0);
@@ -50,15 +49,13 @@ function setup() {
     let len = parseInt(document.getElementById('snakeLength').value);
     if (!isNaN(len) && len > 1) maxTrailLength = len;
     trail = [];
-
-    // Attach the Clear & Reset button from HTML
-    document.getElementById('clearBtn').onclick = clearAndReset;
 }
 
 function draw() {
-    // Do NOT call background(30); this makes finite trail snake and safe erasure work
+    const centerX = width / 2;
+    const centerY = height / 2;
 
-    // Live update vectors from UI
+    // Live update vectors
     for (let i = 0; i < vectorCount; i++) {
         let radius = zParseInt(document.getElementById(`length${i}`).value, 0);
         let N = zParseInt(document.getElementById(`N${i}`).value, 0);
@@ -74,9 +71,23 @@ function draw() {
     let len = parseInt(document.getElementById('snakeLength').value);
     if (!isNaN(len) && len > 1) maxTrailLength = len;
 
-    // Robust scaleFactor to fit all vectors in canvas
+    // Immediate flush: if trail is too long, shorten now
+    while (trail.length > maxTrailLength) {
+        let old = trail.shift();
+        let oldr = roundXY(old.x, old.y);
+        erasePixel(oldr.x, oldr.y, old.pixelSize);
+        if (trail.length > 0) {
+            let next = trail[0];
+            let nextr = roundXY(next.x, next.y);
+            if (nextr.x === oldr.x && nextr.y === oldr.y)
+                drawPixel(nextr.x, nextr.y, next.pixelSize);
+        }
+    }
+
+    // Fit all vectors in canvas, margin-aware
     let totalNominal = vectors.reduce((sum, v) => v.D === 0 ? sum : sum + Math.abs(v.radius), 0);
-    let maxRadius = (canvasSize / 2) - (pixelSize / 2) - 2;
+    // Margin-aware: max radius is half canvas - MARGIN - (pixelSize/2)
+    let maxRadius = (min(width, height) / 2) - MARGIN - (pixelSize / 2) - 1;
     let scaleFactor = totalNominal !== 0 ? maxRadius / totalNominal : 1;
     for (let v of vectors) {
         if (v.D === 0) continue;
@@ -93,7 +104,7 @@ function draw() {
         }
     }
 
-    // Sum vectors (with correct scale)
+    // Sum vectors
     let x = centerX, y = centerY;
     for (let v of vectors) {
         if (v.D === 0) continue;
@@ -102,47 +113,35 @@ function draw() {
     }
     let head = { x, y, pixelSize };
 
-    // --- Safe push and erase logic with pixelVisits map and snapped coords ---
+    // Normal tail flush if at max length
+    if (trail.length >= maxTrailLength) {
+        let old = trail.shift();
+        let oldr = roundXY(old.x, old.y);
+        erasePixel(oldr.x, oldr.y, old.pixelSize);
+        if (trail.length > 0) {
+            let next = trail[0];
+            let nextr = roundXY(next.x, next.y);
+            if (nextr.x === oldr.x && nextr.y === oldr.y)
+                drawPixel(nextr.x, nextr.y, next.pixelSize);
+        }
+    }
 
-    addPixelWithMap(head.x, head.y, head.pixelSize);
+    // Add and draw the new head
     trail.push(head);
-
-    // If the trail is longer than maxTrailLength, instantly remove all excess (using splice)
-    if (trail.length > maxTrailLength) {
-        let excess = trail.splice(0, trail.length - maxTrailLength);
-        for (let old of excess) {
-            removePixelWithMap(old.x, old.y, old.pixelSize);
-        }
-    }
+    let headr = roundXY(head.x, head.y);
+    drawPixel(headr.x, headr.y, head.pixelSize);
 }
 
-// Map-based helpers for safe trail erasure with overlap protection
-function pixelKey(x, y) {
-    return `${Math.round(x)}_${Math.round(y)}`;
-}
-
-function addPixelWithMap(x, y, px) {
-    let k = pixelKey(x, y);
-    pixelVisits[k] = (pixelVisits[k] || 0) + 1;
-    setPixel(x, y, color(255,0,0), px);
-}
-
-function removePixelWithMap(x, y, px) {
-    let k = pixelKey(x, y);
-    if (pixelVisits[k]) {
-        pixelVisits[k]--;
-        if (pixelVisits[k] === 0) {
-            setPixel(x, y, color(30), px); // erase with background
-            delete pixelVisits[k];
-        }
-    }
-}
-
-function setPixel(x, y, c, pixelSize) {
+// Draw the pixel so that (x, y) is the actual CENTER
+function drawPixel(x, y, pixelSize) {
     noStroke();
-    fill(c);
-    // Snap drawing to rounded grid, matching pixelKey logic
-    rect(Math.round(x), Math.round(y), pixelSize, pixelSize);
+    fill(255, 0, 0); // trail color
+    rect(x - pixelSize / 2, y - pixelSize / 2, pixelSize, pixelSize);
+}
+function erasePixel(x, y, pixelSize) {
+    noStroke();
+    fill(30); // background
+    rect(x - pixelSize / 2, y - pixelSize / 2, pixelSize, pixelSize);
 }
 
 function keyPressed() {
@@ -151,12 +150,10 @@ function keyPressed() {
     }
 }
 
-// Clear+Reset handler
 function clearAndReset() {
     background(30);
-    pixelVisits = {};
-    trail = [];
-    // Set each vector's initialAngle and angle to current value ("freezes" current configuration)
+    resetVectorsAndTrail();
+    // Set each vector's initialAngle and angle to current value
     for (let v of vectors) {
         v.initialAngle = v.angle;
     }
