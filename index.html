@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Radiarc - An interactive harmonic oscillation graphics tool that generates jewel-like patterns using articulated radii. Explore mathematical art and epicycle snake animations.">
     <title>Radiarc Epicycle Snake</title>
     <style>
         body {
@@ -45,43 +47,56 @@
         #control-toggle { margin: 0 0 18px 0; }
         .subtle { font-size:0.93em; color: #666; }
         #controls[hidden] { display:none; }
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
     <main>
+        <h1 class="visually-hidden">Radiarc Epicycle Snake - Harmonic Oscillation Graphics</h1>
         <div id="main-wrap">
             <div>
-                <div id="p5canvas"></div>
-                <button id="clearBtn">Clear & Reset</button>
+                <div id="p5canvas" role="img" aria-label="Epicycle snake visualization canvas"></div>
+                <button id="clearBtn" aria-label="Clear canvas and reset all vectors">Clear & Reset</button>
             </div>
             <div>
-                <button id="control-toggle">Show Settings</button>
+                <button id="control-toggle" aria-expanded="false" aria-controls="controls">Show Settings</button>
                 <div id="controls" hidden>
+                    <h2 class="visually-hidden">Vector and Display Settings</h2>
                     <table id="vector-controls">
                         <thead>
                             <tr>
-                                <th>Vector</th>
-                                <th>Length</th>
-                                <th>N<br>(numerator)</th>
-                                <th>D<br>(denominator)</th>
+                                <th scope="col">Vector</th>
+                                <th scope="col">Length</th>
+                                <th scope="col">N<br>(numerator)</th>
+                                <th scope="col">D<br>(denominator)</th>
                             </tr>
                         </thead>
                         <tbody>
                         <!-- Vector rows inserted dynamically -->
                         </tbody>
                     </table>
-                    <label>
-                        Snake Length: <input type="number" id="snakeLength" min="2" max="10000" value="300">
+                    <label for="snakeLength">
+                        Snake Length: <input type="number" id="snakeLength" min="2" max="10000" value="300" aria-describedby="snakeLength-desc">
                     </label>
-                    <label>
-                        Pixel Size: <input type="number" id="pixelSize" min="1" max="100" value="10">
+                    <label for="pixelSize">
+                        Pixel Size: <input type="number" id="pixelSize" min="1" max="100" value="10" aria-describedby="pixelSize-desc">
                     </label>
-                    <button id="saveParams">Save Settings</button>
-                    <span class="subtle"><br>
+                    <button id="saveParams" aria-label="Save current settings to browser storage">Save Settings</button>
+                    <span class="subtle" id="settings-help"><br>
                         Each vector rotates by <b>N × 2π / D</b> radians per frame.<br>
                         Adjust N (numerator) and D (denominator) for speed/frequency and closure cycles.<br>
-                        <b>Snake Length</b>: number of positions trailed.<br>
-                        <b>Pixel Size</b>: size of the drawn head/trail pixel.
+                        <span id="snakeLength-desc"><b>Snake Length</b>: number of positions trailed.</span><br>
+                        <span id="pixelSize-desc"><b>Pixel Size</b>: size of the drawn head/trail pixel.</span>
                     </span>
                 </div>
             </div>

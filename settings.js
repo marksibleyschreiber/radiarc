@@ -19,9 +19,11 @@ window.onload = function() {
         if (settingsDiv.hasAttribute('hidden')) {
             settingsDiv.removeAttribute('hidden');
             toggleBtn.textContent = "Hide Settings";
+            toggleBtn.setAttribute('aria-expanded', 'true');
         } else {
             settingsDiv.setAttribute('hidden', '');
             toggleBtn.textContent = "Show Settings";
+            toggleBtn.setAttribute('aria-expanded', 'false');
         }
     };
 };
