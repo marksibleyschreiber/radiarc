@@ -37,6 +37,7 @@ function saveSettings() {
     localStorage.setItem('vectorParams', JSON.stringify(vectorParams));
     localStorage.setItem('pixelSize', document.getElementById('pixelSize').value);
     localStorage.setItem('snakeLength', document.getElementById('snakeLength').value);
+    localStorage.setItem('drawSpeed', document.getElementById('drawSpeed').value);
 }
 
 function loadSettings() {
@@ -59,5 +60,7 @@ function loadSettings() {
     if (pixelSize) document.getElementById('pixelSize').value = pixelSize;
     let snakeLength = localStorage.getItem('snakeLength');
     if (snakeLength) document.getElementById('snakeLength').value = snakeLength;
+    let drawSpeed = localStorage.getItem('drawSpeed');
+    if (drawSpeed) document.getElementById('drawSpeed').value = drawSpeed;
 }
 document.getElementById('saveParams').onclick = saveSettings;

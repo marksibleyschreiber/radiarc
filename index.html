@@ -76,18 +76,41 @@
                     <label>
                         Pixel Size: <input type="number" id="pixelSize" min="1" max="100" value="10">
                     </label>
+                    <label>
+                        Draw Speed (steps/frame): <input type="number" id="drawSpeed" min="1" max="1000" value="1">
+                    </label>
+                    <div style="margin-bottom:16px;">
+                        <label>
+                            Preset name:
+                            <input type="text" id="presetName" placeholder="Preset name" style="width:140px;">
+                        </label>
+                        <button id="savePresetBtn">Save Preset</button>
+                        <br>
+                        <label>
+                            Preset list:
+                            <select id="presetList" style="width:150px;"></select>
+                        </label>
+                        <button id="loadPresetBtn">Load Preset</button>
+                        <button id="deletePresetBtn">Delete Preset</button>
+                        <br>
+                        <button id="exportPresetsBtn">Export Presets</button>
+                        <input type="file" id="importPresetsInput" accept="application/json" style="display:none;">
+                        <button id="importPresetsBtn">Import Presets</button>
+                    </div>
                     <button id="saveParams">Save Settings</button>
                     <span class="subtle"><br>
                         Each vector rotates by <b>N × 2π / D</b> radians per frame.<br>
                         Adjust N (numerator) and D (denominator) for speed/frequency and closure cycles.<br>
                         <b>Snake Length</b>: number of positions trailed.<br>
-                        <b>Pixel Size</b>: size of the drawn head/trail pixel.
+                        <b>Pixel Size</b>: size of the drawn head/trail pixel.<br>
+                        <b>Draw Speed</b>: number of head/tail updates per animation frame.
                     </span>
                 </div>
             </div>
         </div>
     </main>
     <script src="settings.js"></script>
+    <script src="presets.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
     <script src="sketch.js"></script>
 </body>
