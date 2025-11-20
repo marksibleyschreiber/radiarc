@@ -45,6 +45,11 @@
         #control-toggle { margin: 0 0 18px 0; }
         .subtle { font-size:0.93em; color: #666; }
         #controls[hidden] { display:none; }
+        #color-controls h4 { margin: 0 0 6px 0; }
+        #color-controls > div,
+        #color-controls > label {
+            margin-bottom: 7px;
+        }
     </style>
 </head>
 <body>
@@ -52,11 +57,20 @@
         <div id="main-wrap">
             <div>
                 <div id="p5canvas"></div>
-                <button id="clearBtn">Clear & Reset</button>
+                <button id="clearBtn" type="button">Clear &amp; Reset</button>
             </div>
             <div>
-                <button id="control-toggle">Show Settings</button>
-                <div id="controls" hidden>
+                <button id="control-toggle" type="button">Show Settings</button>
+                <div id="controls">
+                    <!-- Color Settings Controls moved here -->
+                    <div style="margin-bottom:16px;" id="color-controls">
+                        <h4>Color Segments</h4>
+                        <div id="colorSegmentsContainer"></div>
+                        <button id="addColorSegmentBtn" type="button">Add Segment</button>
+                        <label style="display:block;margin-top:10px;">
+                            Color Step: <input type="number" id="colorStep" min="1" value="1" style="width:60px;">
+                        </label>
+                    </div>
                     <table id="vector-controls">
                         <thead>
                             <tr>
@@ -84,20 +98,20 @@
                             Preset name:
                             <input type="text" id="presetName" placeholder="Preset name" style="width:140px;">
                         </label>
-                        <button id="savePresetBtn">Save Preset</button>
+                        <button id="savePresetBtn" type="button">Save Preset</button>
                         <br>
                         <label>
                             Preset list:
                             <select id="presetList" style="width:150px;"></select>
                         </label>
-                        <button id="loadPresetBtn">Load Preset</button>
-                        <button id="deletePresetBtn">Delete Preset</button>
+                        <button id="loadPresetBtn" type="button">Load Preset</button>
+                        <button id="deletePresetBtn" type="button">Delete Preset</button>
                         <br>
-                        <button id="exportPresetsBtn">Export Presets</button>
+                        <button id="exportPresetsBtn" type="button">Export Presets</button>
                         <input type="file" id="importPresetsInput" accept="application/json" style="display:none;">
-                        <button id="importPresetsBtn">Import Presets</button>
+                        <button id="importPresetsBtn" type="button">Import Presets</button>
                     </div>
-                    <button id="saveParams">Save Settings</button>
+                    <button id="saveParams" type="button">Save Settings</button>
                     <span class="subtle"><br>
                         Each vector rotates by <b>N × 2π / D</b> radians per frame.<br>
                         Adjust N (numerator) and D (denominator) for speed/frequency and closure cycles.<br>
@@ -109,7 +123,9 @@
             </div>
         </div>
     </main>
+    <!-- Script order: utility, settings, color, presets, p5.js, sketch -->
     <script src="settings.js"></script>
+    <script src="colorSettings.js"></script>
     <script src="presets.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
     <script src="sketch.js"></script>

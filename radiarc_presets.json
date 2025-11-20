@@ -1,0 +1,410 @@
+[
+  {
+    "name": "arc31",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "1",
+        "D": "360"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "4",
+    "snakeLength": "31",
+    "drawSpeed": "5"
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": 1,
+    "colorIndex": 0
+  },
+  {
+    "name": "fascinated",
+    "vectorParams": [
+      {
+        "length": "1000",
+        "N": "1",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-1",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "5",
+        "D": "1441"
+      },
+      {
+        "length": "1",
+        "N": "-7",
+        "D": "76"
+      },
+      {
+        "length": "1000",
+        "N": "6",
+        "D": "1443"
+      },
+      {
+        "length": "1000",
+        "N": "7",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "-4",
+        "D": "1444"
+      },
+      {
+        "length": "1000",
+        "N": "-9",
+        "D": "1440"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "27359",
+    "drawSpeed": "400"
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": 1,
+    "colorIndex": 0
+  },
+  {
+    "name": "weightless",
+    "vectorParams": [
+      {
+        "length": "1000",
+        "N": "1",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-1",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "5",
+        "D": "1441"
+      },
+      {
+        "length": "1",
+        "N": "-7",
+        "D": "76"
+      },
+      {
+        "length": "1000",
+        "N": "2886",
+        "D": "1443"
+      },
+      {
+        "length": "1000",
+        "N": "2887",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "-2884",
+        "D": "1444"
+      },
+      {
+        "length": "1000",
+        "N": "-2889",
+        "D": "1440"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "27359",
+    "drawSpeed": "600"
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": 1,
+    "colorIndex": 0
+  },
+  {
+    "name": "crashing",
+    "vectorParams": [
+      {
+        "length": "1000",
+        "N": "6",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-6",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "5",
+        "D": "1441"
+      },
+      {
+        "length": "1",
+        "N": "-7",
+        "D": "76"
+      },
+      {
+        "length": "1000",
+        "N": "2886",
+        "D": "1442"
+      },
+      {
+        "length": "1000",
+        "N": "2887",
+        "D": "1438"
+      },
+      {
+        "length": "1000",
+        "N": "-2884",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-2889",
+        "D": "1439"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "27359",
+    "drawSpeed": "600"
+  },
+  {
+    "name": "crashing2",
+    "vectorParams": [
+      {
+        "length": "1000",
+        "N": "1",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-1",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "1",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-1",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "2881",
+        "D": "1442"
+      },
+      {
+        "length": "1000",
+        "N": "2882",
+        "D": "1438"
+      },
+      {
+        "length": "1000",
+        "N": "-2882",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-2881",
+        "D": "1439"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "92735",
+    "drawSpeed": "300",
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": 1,
+    "colorIndex": 0
+  },
+  {
+    "name": "bubblegum",
+    "vectorParams": [
+      {
+        "length": "1000",
+        "N": "1",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-1",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "1",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-1",
+        "D": "1440"
+      },
+      {
+        "length": "1000",
+        "N": "2881",
+        "D": "1442"
+      },
+      {
+        "length": "1000",
+        "N": "2882",
+        "D": "1438"
+      },
+      {
+        "length": "1000",
+        "N": "-2882",
+        "D": "1441"
+      },
+      {
+        "length": "1000",
+        "N": "-2881",
+        "D": "1439"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "1000000",
+    "drawSpeed": "300",
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": 1,
+    "colorIndex": 0
+  },
+  {
+    "name": "baton",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "1",
+        "D": "3601"
+      },
+      {
+        "length": "1",
+        "N": "-1",
+        "D": "3601"
+      },
+      {
+        "length": "1",
+        "N": "3",
+        "D": "3602"
+      },
+      {
+        "length": "1",
+        "N": "-4",
+        "D": "3602"
+      },
+      {
+        "length": "1",
+        "N": "5",
+        "D": "3508"
+      },
+      {
+        "length": "1",
+        "N": "-6",
+        "D": "3508"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "3509"
+      },
+      {
+        "length": "1",
+        "N": "-1",
+        "D": "3509"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "10000",
+    "drawSpeed": "100",
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": 1,
+    "colorIndex": 0
+  }
+]

@@ -1,6 +1,15 @@
-window.onload = function() {
+// settings.js
+
+window.vectorCount = 8;
+window.colorStep = 1;
+
+// Utility to pause and resume animation safely
+function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
+function resumeAnimation() { if (typeof loop === "function") loop(); }
+
+window.addEventListener('DOMContentLoaded', function() {
     let tbody = document.querySelector("#vector-controls tbody");
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < window.vectorCount; i++) {
         let tr = document.createElement("tr");
         tr.innerHTML = `
           <td>V${i+1}</td>
@@ -24,11 +33,23 @@ window.onload = function() {
             toggleBtn.textContent = "Show Settings";
         }
     };
-};
+    window.colorStep = getStartingColorStep();
+    document.getElementById('colorStep').value = window.colorStep;
+    document.getElementById('saveParams').onclick = saveSettings;
+});
+
+function getStartingColorStep() {
+    let step = parseInt(localStorage.getItem('colorStep'), 10);
+    if (step && step >= 1) return step;
+    const stepInput = document.getElementById('colorStep');
+    let domStep = parseInt(stepInput?.value, 10);
+    return (domStep && domStep >= 1) ? domStep : 1;
+}
 
 function saveSettings() {
+    pauseAnimation();
     let vectorParams = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < window.vectorCount; i++) {
         const length = document.getElementById(`length${i}`).value;
         const N = document.getElementById(`N${i}`).value;
         const D = document.getElementById(`D${i}`).value;
@@ -38,6 +59,9 @@ function saveSettings() {
     localStorage.setItem('pixelSize', document.getElementById('pixelSize').value);
     localStorage.setItem('snakeLength', document.getElementById('snakeLength').value);
     localStorage.setItem('drawSpeed', document.getElementById('drawSpeed').value);
+    localStorage.setItem('colorSegments', JSON.stringify(window.colorSegments)); // Save color settings
+    localStorage.setItem('colorStep', window.colorStep);
+    resumeAnimation();
 }
 
 function loadSettings() {
@@ -45,7 +69,7 @@ function loadSettings() {
     try {
       vectorParams = JSON.parse(localStorage.getItem('vectorParams'));
     } catch (e) {}
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < window.vectorCount; i++) {
         if (vectorParams && vectorParams[i]) {
             document.getElementById(`length${i}`).value = vectorParams[i].length ?? 100;
             document.getElementById(`N${i}`).value = vectorParams[i].N ?? 1;
@@ -62,5 +86,23 @@ function loadSettings() {
     if (snakeLength) document.getElementById('snakeLength').value = snakeLength;
     let drawSpeed = localStorage.getItem('drawSpeed');
     if (drawSpeed) document.getElementById('drawSpeed').value = drawSpeed;
+    // Load color settings
+    try {
+        let cs = JSON.parse(localStorage.getItem('colorSegments'));
+        if (Array.isArray(cs)) window.colorSegments = cs;
+    } catch (e) {}
+    let step = localStorage.getItem('colorStep');
+/*
+    if (step) window.colorStep = parseInt(step);
+    let step = parseInt(localStorage.getItem('colorStep'), 10);
+ */
+    setColorStepFromUpdation(step);
+    if (typeof renderColorSegments === "function") renderColorSegments();
+    if (typeof updateColorConfig === "function") updateColorConfig();
 }
-document.getElementById('saveParams').onclick = saveSettings;
+
+// On loadSettings/loadPreset:
+function setColorStepFromUpdation(val) {
+    window.colorStep = (val && val >= 1) ? val : 1;
+    document.getElementById('colorStep').value = window.colorStep;
+}

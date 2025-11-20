@@ -1,22 +1,76 @@
-// Radiarc Epicycle Snake - Classic frame logic, fast drawing, no smoothing.
+// Radiarc Epicycle Snake - Refactored for color segments and preset support
 
-const MARGIN = 40;     // Margin on each edge, in pixels
-const vectorCount = 8;
+const MARGIN = 40;
+const vectorCount = window.vectorCount || 8;
 const stopHistory = new Map();
 
 let vectors = [];
+let nominalCycleLength = 0;
 let trail = [];
 let time = -1;
+let cycleLength = time + 1;
 let maxTrailLength = 300;
 let pixelSize = 2;
+let oldPixelSize = pixelSize;
+
+// Color control variables
+window.colorSegments = window.colorSegments || [{ length: 1, pixelColor: [255, 0, 0] }];
+window.colorStep = 1;
+let colorIndex = 0;
+let fullColorArray = buildColorArray(window.colorSegments);
+
+function setColorConfigFromControls(config) {
+    window.colorSegments = Array.isArray(config.colorSegments)
+        ? config.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] }))
+        : [{ length: 1, pixelColor: [255, 0, 0] }];
+    setColorStepFromUpdation(config.colorStep);
+    colorIndex = 0; // Reset on new config
+    fullColorArray = buildColorArray(window.colorSegments);
+}
+
+function setColorConfigFromPreset(preset) {
+    window.colorSegments = Array.isArray(preset.colorSegments)
+        ? preset.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] }))
+        : [{ length: 1, pixelColor: [255, 0, 0] }];
+    window.colorStep = preset.colorStep;
+    colorIndex = 0;
+    fullColorArray = buildColorArray(window.colorSegments);
+}
 
 function roundXY(x, y) {
     return { x: Math.round(x), y: Math.round(y) };
 }
 
+function gcd(a, b) {
+    while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return Math.abs(a);
+}
+
+function lcm(a, b) {
+    if (a === 0 || b === 0) return 0;
+    return Math.abs(a * b) / gcd(a, b);
+}
+
 function zParseInt(val, fallback) {
     let n = parseInt(val, 10);
     return isNaN(n) ? fallback : n;
+}
+
+// Build concatenated color array from color segments
+function buildColorArray(segments) {
+    let arr = [];
+    segments.forEach(seg => {
+        for (let i = 0; i < seg.length; i++) {
+            arr.push(seg.pixelColor);
+        }
+    });
+    return arr;
 }
 
 function setup() {
@@ -32,10 +86,12 @@ function setup() {
     document.getElementById('clearBtn').onclick = clearAndReset;
     drawingContext.imageSmoothingEnabled = false;
     noSmooth();
+    window.dispatchEvent(new Event('p5ready'));
 }
 
 function resetVectors() {
     vectors = [];
+    nominalCycleLength = 0;
     for (let i = 0; i < vectorCount; i++) {
         let D = zParseInt(document.getElementById(`D${i}`).value, 0);
         if (D === 0) continue;
@@ -47,7 +103,10 @@ function resetVectors() {
             D: D,
             initialAngle: 0,
         });
+        if (nominalCycleLength === 0) nominalCycleLength = D / gcd(N, D);
+        else nominalCycleLength = lcm(nominalCycleLength, D / gcd(N, D));
     }
+    oldPixelSize = pixelSize;
     pixelSize = zParseInt(document.getElementById('pixelSize').value, 2);
     let len = parseInt(document.getElementById('snakeLength').value);
     if (!isNaN(len) && len >= 1) maxTrailLength = len;
@@ -69,64 +128,79 @@ function draw() {
     let maxRadius = (Math.min(width, height) / 2) - MARGIN - pixelAdj;
     let scaleFactor = totalNominal !== 0 ? maxRadius / totalNominal : 0;
 
-    // Classic per-frame tail logic, N times per frame
-    for (let step = 0; step < drawSpeed; step++) {
-        // Erase oldest tail pixel if over maxTrailLength
-        if (trail.length > maxTrailLength) {
-            let old_stops = trail.splice(0, trail.length - maxTrailLength);
-            for (let stop of old_stops) {
-                let stopsKey = `${stop.x},${stop.y}`
-                if (stopHistory.get(stopsKey) < 2) {
-                    erasePixel(stop.x, stop.y, stop.pixelSize);
+    // Live color update from colorSettings
+    updateColorConfig();
+
+    if (vectors.length > 0 && fullColorArray.length > 0 && drawSpeed > 0) {
+        for (let step = 0; step < drawSpeed; step++) {
+            // Erase oldest tail pixel if over maxTrailLength
+            if (trail.length > maxTrailLength) {
+                let old_stops = trail.splice(0, trail.length - maxTrailLength);
+                for (let stop of old_stops) {
+                    let stopsKey = `${stop.x},${stop.y}`
+                    if (stopHistory.get(stopsKey) === 1) {
+                        erasePixel(stop.x, stop.y, oldPixelSize);
+                        stopHistory.set(stopsKey, 0);
+                    }
                 }
-                stopHistory.set(stopsKey, stopHistory.get(stopsKey) - 1);
             }
+
+            // Advance angles
+            let resetClock = 1;
+            let x = centerX, y = centerY;
+            for (let v of vectors) {
+                let m = ((time + 1) * v.N) % v.D;
+                if (m !== 0 ) resetClock = 0;
+                let angle = v.initialAngle + m;
+                let radius = scaleFactor * v.radius;
+                x += radius * Math.cos((TWO_PI * angle) / v.D);
+                y += radius * Math.sin((TWO_PI * angle) / v.D);
+            }
+            let rounded = roundXY(x, y);
+
+            // Store current colorIndex for tail if needed
+            let head = { x: rounded.x, y: rounded.y, pixelSize, colorIndex };
+            let stopsKey = `${head.x},${head.y}`;
+            if (!stopHistory.has(stopsKey)) {
+                stopHistory.set(stopsKey, 0);
+            }
+            if (stopHistory.get(stopsKey) === 0) {
+                // Add and draw new head
+                trail.push(head);
+                drawPixel(head.x, head.y, head.pixelSize, head.colorIndex);
+                stopHistory.set(stopsKey, 1);
+
+                // Update colorIndex for next pixel
+                colorIndex = (colorIndex + window.colorStep) % fullColorArray.length;
+            }
+            if (resetClock) {
+                cycleLength = time + 1;
+                time = -1;
+            }
+            time += 1;
         }
-
-        // Advance angles
-        let resetClock = 1;
-        let x = centerX, y = centerY;
-        for (let v of vectors) {
-            let m = ((time + 1) * v.N) % v.D;
-            if (m !== 0 ) resetClock = 0;
-            let angle = v.initialAngle + m;
-            let radius = scaleFactor * v.radius;
-            x += radius * Math.cos((TWO_PI * angle) / v.D);
-            y += radius * Math.sin((TWO_PI * angle) / v.D);
-        }
-        let rounded = roundXY(x, y);
-
-        // Always store rounded values in trail!
-        let head = { x: rounded.x, y: rounded.y, pixelSize };
-
-        // Add and draw new head
-        trail.push(head);
-        drawPixel(head.x, head.y, head.pixelSize);
-        let stopsKey = `${head.x},${head.y}`
-        if (!stopHistory.has(stopsKey)) stopHistory.set(stopsKey, 0);
-        stopHistory.set(stopsKey, 1 + stopHistory.get(stopsKey));
-        // if (resetClock) time = -1;
-        time += 1;
     }
 }
 
-// Draw the pixel so that (x, y) is the actual CENTER
-function drawPixel(x, y, pixelSize) {
+// Draw pixel using color array (from colorSegments)
+function drawPixel(x, y, pixelSize, index) {
+    let color = fullColorArray[index % fullColorArray.length];
     noStroke();
-    fill(255, 0, 0); // always red
+    fill(...color);
     rect(Math.round(x - pixelSize / 2), Math.round(y - pixelSize / 2), pixelSize, pixelSize);
 }
+
 function erasePixel(x, y, pixelSize) {
     noStroke();
     fill(30); // always background
     rect(Math.round(x - pixelSize / 2), Math.round(y - pixelSize / 2), pixelSize, pixelSize);
 }
 
-function keyPressed() {
-    if (key === 's') {
-        saveCanvas('radiarc_epicycle_snake', 'png');
-    }
-}
+// function keyPressed() {
+//     if (key === 's') {
+//         saveCanvas('radiarc_epicycle_snake', 'png');
+//     }
+// }
 
 function clearAndReset() {
     background(30);
@@ -134,4 +208,5 @@ function clearAndReset() {
     trail = [];
     time = 0;
     stopHistory.clear();
+    n = 0;
 }

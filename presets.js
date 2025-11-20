@@ -1,9 +1,24 @@
 /**
  * Preset management for Radiarc Epicycle Snake.
  * Handles saving, loading, listing, deleting, exporting, and importing presets via localStorage and JSON files.
+ *
+ * Now supports saving and restoring color settings (colorSegments, colorStep, colorIndex).
  */
 
 const PRESETS_STORAGE_KEY = "radiarc_setting_presets";
+window.colorStep = 1;
+
+// Helper to flash/highlight updated input fields for visibility
+function flashInput(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.backgroundColor = "#ccedff";
+    setTimeout(() => { el.style.backgroundColor = ""; }, 450);
+}
+
+// Helper to pause/resume animation if available
+function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
+function resumeAnimation() { if (typeof loop === "function") loop(); }
 
 function getPresets() {
     let presets = [];
@@ -14,9 +29,10 @@ function getPresets() {
 }
 
 function savePreset(name) {
+    pauseAnimation();
     // Collect settings from current UI
     let vectorParams = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < window.vectorCount; i++) {
         vectorParams.push({
             length: document.getElementById(`length${i}`).value,
             N: document.getElementById(`N${i}`).value,
@@ -27,10 +43,30 @@ function savePreset(name) {
     let snakeLength = document.getElementById('snakeLength').value;
     let drawSpeed = document.getElementById('drawSpeed').value;
 
+    // --- NOW SAVE CURRENT COLOR SETTINGS ---
+    let colorSegments = Array.isArray(window.colorSegments)
+        ? window.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] })) // Deep copy
+        : [{ length: 1, pixelColor: [255, 0, 0] }];
+/*
+    let colorStep = typeof window.colorStep !== "undefined" ? window.colorStep : 1;
+    let colorIndex = typeof window.colorIndex !== "undefined" ? window.colorIndex : 0;
+ */
+
     let presets = getPresets();
-    // Update if name exists, else add new
     let idx = presets.findIndex(p => p.name === name);
-    let presetObj = { name, vectorParams, pixelSize, snakeLength, drawSpeed };
+    let colorStep = window.colorStep;
+    let colorIndex = 0;
+    let presetObj = {
+        name,
+        vectorParams,
+        pixelSize,
+        snakeLength,
+        drawSpeed,
+        colorSegments, // Save user's actual color segments
+        colorStep,     // Save user's actual colorStep
+        colorIndex     // Save user's actual colorIndex
+    };
     if (idx !== -1) {
         presets[idx] = presetObj;
     } else {
@@ -38,32 +74,58 @@ function savePreset(name) {
     }
     localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(presets));
     refreshPresetList();
+    resumeAnimation();
 }
 
 function loadPreset(index) {
+    pauseAnimation();
     let presets = getPresets();
     let preset = presets[index];
-    if (!preset) return;
-    // Fill UI with preset data
-    for (let i = 0; i < 8; i++) {
+    if (!preset) {
+        resumeAnimation();
+        return;
+    }
+    for (let i = 0; i < window.vectorCount; i++) {
         document.getElementById(`length${i}`).value = preset.vectorParams[i].length;
         document.getElementById(`N${i}`).value = preset.vectorParams[i].N;
         document.getElementById(`D${i}`).value = preset.vectorParams[i].D;
+        flashInput(`length${i}`);
+        flashInput(`N${i}`);
+        flashInput(`D${i}`);
     }
     document.getElementById('pixelSize').value = preset.pixelSize;
+    flashInput('pixelSize');
     document.getElementById('snakeLength').value = preset.snakeLength;
+    flashInput('snakeLength');
     document.getElementById('drawSpeed').value = preset.drawSpeed;
+    flashInput('drawSpeed');
 
-    // Optionally, reload settings to update UI if needed
+    // --- RESTORE COLOR SETTINGS FROM PRESET ---
+    if (typeof setColorConfigFromPreset === "function") {
+        setColorConfigFromPreset(preset);
+    }
+    // Re-render color segments UI if the function is available
+    if (typeof renderColorSegments === "function") {
+        renderColorSegments();
+    }
+
+    if (typeof saveSettings === 'function') saveSettings();
     if (typeof loadSettings === "function") loadSettings();
+
+    resumeAnimation();
 }
 
 function deletePreset(index) {
+    pauseAnimation();
     let presets = getPresets();
-    if (index < 0 || index >= presets.length) return;
+    if (index < 0 || index >= presets.length) {
+        resumeAnimation();
+        return;
+    }
     presets.splice(index, 1);
     localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(presets));
     refreshPresetList();
+    resumeAnimation();
 }
 
 function refreshPresetList() {
@@ -81,6 +143,7 @@ function refreshPresetList() {
 
 // Export settings to JSON file
 function exportPresets() {
+    pauseAnimation();
     const presets = getPresets();
     const data = JSON.stringify(presets, null, 2); // Pretty print
     const blob = new Blob([data], { type: "application/json" });
@@ -92,12 +155,17 @@ function exportPresets() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    resumeAnimation();
 }
 
 // Import settings from JSON file
 function importPresets(event) {
+    pauseAnimation();
     const file = event.target.files[0];
-    if (!file) return;
+    if (!file) {
+        resumeAnimation();
+        return;
+    }
     const reader = new FileReader();
     reader.onload = (e) => {
         try {
@@ -112,13 +180,13 @@ function importPresets(event) {
         } catch (err) {
             alert("Error reading file: " + err);
         }
+        resumeAnimation();
     };
     reader.readAsText(file);
 }
 
 // Attach UI event handlers when DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
-    // Save handler
     const saveBtn = document.getElementById('savePresetBtn');
     if (saveBtn) {
         saveBtn.onclick = () => {
@@ -128,7 +196,6 @@ window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('presetName').value = "";
         };
     }
-    // Load handler
     const loadBtn = document.getElementById('loadPresetBtn');
     if (loadBtn) {
         loadBtn.onclick = () => {
@@ -137,7 +204,6 @@ window.addEventListener('DOMContentLoaded', () => {
             loadPreset(Number(idx));
         };
     }
-    // Delete handler
     const delBtn = document.getElementById('deletePresetBtn');
     if (delBtn) {
         delBtn.onclick = () => {
@@ -148,23 +214,19 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         };
     }
-    // Export handler
     const exportBtn = document.getElementById('exportPresetsBtn');
     if (exportBtn) {
         exportBtn.onclick = exportPresets;
     }
-    // Import handler
     const importBtn = document.getElementById('importPresetsBtn');
     if (importBtn) {
         importBtn.onclick = () => {
             document.getElementById('importPresetsInput').click();
         };
     }
-    // File input handler
     const fileInput = document.getElementById('importPresetsInput');
     if (fileInput) {
         fileInput.onchange = importPresets;
     }
-    // Initial listing
     refreshPresetList();
 });
