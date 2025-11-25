@@ -7,11 +7,13 @@ const stopHistory = new Map();
 let vectors = [];
 let nominalCycleLength = 0;
 let trail = [];
+let pushed = 0;
 let time = -1;
+let onsize = 0;
+let hitsize = 0;
 let cycleLength = time + 1;
 let maxTrailLength = 300;
 let pixelSize = 2;
-let oldPixelSize = pixelSize;
 
 // Color control variables
 window.colorSegments = window.colorSegments || [{ length: 1, pixelColor: [255, 0, 0] }];
@@ -106,9 +108,9 @@ function resetVectors() {
         if (nominalCycleLength === 0) nominalCycleLength = D / gcd(N, D);
         else nominalCycleLength = lcm(nominalCycleLength, D / gcd(N, D));
     }
-    oldPixelSize = pixelSize;
-    pixelSize = zParseInt(document.getElementById('pixelSize').value, 2);
-    let len = parseInt(document.getElementById('snakeLength').value);
+    document.getElementById('lcm-stat').textContent = BigInt(nominalCycleLength).toString();
+    pixelSize = zParseInt(document.getElementById('pixelSize').value, 1);
+    let len = zParseInt(document.getElementById('snakeLength').value, 0);
     if (!isNaN(len) && len >= 1) maxTrailLength = len;
 }
 
@@ -134,13 +136,28 @@ function draw() {
     if (vectors.length > 0 && fullColorArray.length > 0 && drawSpeed > 0) {
         for (let step = 0; step < drawSpeed; step++) {
             // Erase oldest tail pixel if over maxTrailLength
+/*
             if (trail.length > maxTrailLength) {
                 let old_stops = trail.splice(0, trail.length - maxTrailLength);
                 for (let stop of old_stops) {
                     let stopsKey = `${stop.x},${stop.y}`
-                    if (stopHistory.get(stopsKey) === 1) {
-                        erasePixel(stop.x, stop.y, oldPixelSize);
-                        stopHistory.set(stopsKey, 0);
+                    if (stopHistory.get(stopsKey).length > 0) {
+                        for (let px of stopHistory.get(stopsKey)) erasePixel(stop.x, stop.y, px);
+                        onsize -= 1;
+                        stopHistory.set(stopsKey, []);
+                    }
+                }
+            }
+ */
+            if (pushed > maxTrailLength) {
+                let old_stops = trail.splice(0, trail.length - maxTrailLength);
+                for (let stop of old_stops) {
+                    let stopsKey = `${stop.x},${stop.y}`
+                    while (stopHistory.get(stopsKey).length > 0) {
+                        let px = stopHistory.get(stopsKey).shift()
+                        erasePixel(stop.x, stop.y, px);
+                        if (stopHistory.get(stopsKey).length === 0) onsize -= 1;
+                        pushed -= 1;
                     }
                 }
             }
@@ -157,34 +174,46 @@ function draw() {
                 y += radius * Math.sin((TWO_PI * angle) / v.D);
             }
             let rounded = roundXY(x, y);
-
-            // Store current colorIndex for tail if needed
-            let head = { x: rounded.x, y: rounded.y, pixelSize, colorIndex };
+            let head = { x: rounded.x, y: rounded.y, pixelSize };
             let stopsKey = `${head.x},${head.y}`;
             if (!stopHistory.has(stopsKey)) {
-                stopHistory.set(stopsKey, 0);
+                stopHistory.set(stopsKey, []);
+                hitsize += 1;
             }
-            if (stopHistory.get(stopsKey) === 0) {
-                // Add and draw new head
+            stopHistory.get(stopsKey).push(head.pixelSize);
+            pushed += 1;
+/*
+            if (stopHistory.get(stopsKey).length === 1) {
+                onsize += 1;
                 trail.push(head);
-                drawPixel(head.x, head.y, head.pixelSize, head.colorIndex);
-                stopHistory.set(stopsKey, 1);
-
-                // Update colorIndex for next pixel
-                colorIndex = (colorIndex + window.colorStep) % fullColorArray.length;
+                drawPixel(head.x, head.y, head.pixelSize);
             }
+ */
+            if (trail.length <= maxTrailLength) {
+                if (stopHistory.get(stopsKey).length === 1) {
+                    onsize += 1;
+                    trail.push(head);
+                    drawPixel(head.x, head.y, head.pixelSize);
+                }
+            }
+            colorIndex += 1;
             if (resetClock) {
                 cycleLength = time + 1;
                 time = -1;
             }
             time += 1;
         }
+        document.getElementById('time-stat').textContent = time;
+        document.getElementById('on-stat').textContent = onsize;
+        document.getElementById('hit-stat').textContent = stopHistory.size;
+        document.getElementById('pushed-stat').textContent = pushed;
+        document.getElementById('length-stat').textContent = trail.length;
     }
 }
 
 // Draw pixel using color array (from colorSegments)
-function drawPixel(x, y, pixelSize, index) {
-    let color = fullColorArray[index % fullColorArray.length];
+function drawPixel(x, y, pixelSize) {
+    let color = fullColorArray[(window.colorStep * colorIndex) % fullColorArray.length];
     noStroke();
     fill(...color);
     rect(Math.round(x - pixelSize / 2), Math.round(y - pixelSize / 2), pixelSize, pixelSize);
@@ -208,5 +237,7 @@ function clearAndReset() {
     trail = [];
     time = 0;
     stopHistory.clear();
-    n = 0;
+    pushed = 0;
+    onsize = 0;
+//     n = 0;
 }

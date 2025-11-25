@@ -11,15 +11,23 @@ window.addEventListener('DOMContentLoaded', function() {
     let tbody = document.querySelector("#vector-controls tbody");
     for (let i = 0; i < window.vectorCount; i++) {
         let tr = document.createElement("tr");
+/*
         tr.innerHTML = `
           <td>V${i+1}</td>
           <td><input type="number" id="length${i}" min="0" max="400" value="100"></td>
           <td><input type="number" id="N${i}" min="-20" max="20" value="1"></td>
           <td><input type="number" id="D${i}" min="1" max="1000" value="300"></td>
         `;
+ */
+        tr.innerHTML = `
+          <td>V${i+1}</td>
+          <td><input type="number" id="length${i}" style="width:60px;"></td>
+          <td><input type="number" id="N${i}" style="width:90px;"></td>
+          <td><input type="number" id="D${i}" style="width:90px;"></td>
+        `;
         tbody.appendChild(tr);
     }
-    loadSettings();
+//     loadSettings();
 
     // Toggle settings window
     const settingsDiv = document.getElementById('controls');

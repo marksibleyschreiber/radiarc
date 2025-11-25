@@ -29,6 +29,8 @@
             margin: 10px 0 0 0;
             display: block;
         }
+        #lcmstat {
+            }
         #controls {
             min-width: 400px;
             margin-top: 0;
@@ -58,17 +60,40 @@
             <div>
                 <div id="p5canvas"></div>
                 <button id="clearBtn" type="button">Clear &amp; Reset</button>
+                <label style="display:block;margin-top:6px;">
+                  LCM:
+                  <output type="number" id="lcm-stat" style="width:740px;"></output>
+                </label>
+                <label style="display:block;margin-top:6px;">
+                  TICK:
+                  <output type="number" id="time-stat" style="width:740px;"></output>
+                </label>
+                <label style="display:block;margin-top:6px;">
+                  ON:
+                  <output type="number" id="on-stat" style="width:740px;"></output>
+                </label>
+                <label style="display:block;margin-top:6px;">
+                  HIT:
+                  <output type="number" id="hit-stat" style="width:740px;"></output>
+                </label>
+                <label style="display:block;margin-top:6px;">
+                  PUSHED:
+                  <output type="number" id="pushed-stat" style="width:740px;"></output>
+                </label>
+                <label style="display:block;margin-top:6px;">
+                  Trail Length:
+                  <output type="number" id="length-stat" style="width:740px;"></output>
+                </label>
             </div>
             <div>
                 <button id="control-toggle" type="button">Show Settings</button>
                 <div id="controls">
-                    <!-- Color Settings Controls moved here -->
                     <div style="margin-bottom:16px;" id="color-controls">
                         <h4>Color Segments</h4>
                         <div id="colorSegmentsContainer"></div>
                         <button id="addColorSegmentBtn" type="button">Add Segment</button>
                         <label style="display:block;margin-top:10px;">
-                            Color Step: <input type="number" id="colorStep" min="1" value="1" style="width:60px;">
+                            Color Step: <input type="number" id="colorStep" min="1" value="1" style="width:90px;">
                         </label>
                     </div>
                     <table id="vector-controls">
@@ -84,8 +109,13 @@
                         <!-- Vector rows inserted dynamically -->
                         </tbody>
                     </table>
+<!--
                     <label>
                         Snake Length: <input type="number" id="snakeLength" min="2" max="10000" value="300">
+                    </label>
+ -->
+                    <label>
+                        Snake Length: <input type="number" id="snakeLength" style="width:90px;">
                     </label>
                     <label>
                         Pixel Size: <input type="number" id="pixelSize" min="1" max="100" value="10">
