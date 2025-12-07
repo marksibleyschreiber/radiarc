@@ -1,12 +1,9 @@
 /**
  * Preset management for Radiarc Epicycle Snake.
  * Handles saving, loading, listing, deleting, exporting, and importing presets via localStorage and JSON files.
- *
- * Now supports saving and restoring color settings (colorSegments, colorStep, colorIndex).
  */
 
 const PRESETS_STORAGE_KEY = "radiarc_setting_presets";
-window.colorStep = 1;
 
 // Helper to flash/highlight updated input fields for visibility
 function flashInput(id) {
@@ -16,9 +13,11 @@ function flashInput(id) {
     setTimeout(() => { el.style.backgroundColor = ""; }, 450);
 }
 
+/*
 // Helper to pause/resume animation if available
 function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
 function resumeAnimation() { if (typeof loop === "function") loop(); }
+ */
 
 function getPresets() {
     let presets = [];
@@ -48,14 +47,10 @@ function savePreset(name) {
         ? window.colorSegments.map(seg =>
             ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] })) // Deep copy
         : [{ length: 1, pixelColor: [255, 0, 0] }];
-/*
-    let colorStep = typeof window.colorStep !== "undefined" ? window.colorStep : 1;
-    let colorIndex = typeof window.colorIndex !== "undefined" ? window.colorIndex : 0;
- */
 
     let presets = getPresets();
     let idx = presets.findIndex(p => p.name === name);
-    let colorStep = window.colorStep;
+    let colorStep = document.getElementById('colorStep').value;
     let colorIndex = 0;
     let presetObj = {
         name,
@@ -104,6 +99,7 @@ function loadPreset(index) {
     if (typeof setColorConfigFromPreset === "function") {
         setColorConfigFromPreset(preset);
     }
+    document.getElementById('colorStep').value = preset.colorStep;
     // Re-render color segments UI if the function is available
     if (typeof renderColorSegments === "function") {
         renderColorSegments();

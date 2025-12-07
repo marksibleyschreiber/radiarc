@@ -1,7 +1,6 @@
 // settings.js
 
 window.vectorCount = 8;
-window.colorStep = 1;
 
 // Utility to pause and resume animation safely
 function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
@@ -11,14 +10,6 @@ window.addEventListener('DOMContentLoaded', function() {
     let tbody = document.querySelector("#vector-controls tbody");
     for (let i = 0; i < window.vectorCount; i++) {
         let tr = document.createElement("tr");
-/*
-        tr.innerHTML = `
-          <td>V${i+1}</td>
-          <td><input type="number" id="length${i}" min="0" max="400" value="100"></td>
-          <td><input type="number" id="N${i}" min="-20" max="20" value="1"></td>
-          <td><input type="number" id="D${i}" min="1" max="1000" value="300"></td>
-        `;
- */
         tr.innerHTML = `
           <td>V${i+1}</td>
           <td><input type="number" id="length${i}" style="width:60px;"></td>
@@ -27,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
         `;
         tbody.appendChild(tr);
     }
-//     loadSettings();
+    loadSettings();
 
     // Toggle settings window
     const settingsDiv = document.getElementById('controls');
@@ -41,8 +32,6 @@ window.addEventListener('DOMContentLoaded', function() {
             toggleBtn.textContent = "Show Settings";
         }
     };
-    window.colorStep = getStartingColorStep();
-    document.getElementById('colorStep').value = window.colorStep;
     document.getElementById('saveParams').onclick = saveSettings;
 });
 
@@ -68,7 +57,7 @@ function saveSettings() {
     localStorage.setItem('snakeLength', document.getElementById('snakeLength').value);
     localStorage.setItem('drawSpeed', document.getElementById('drawSpeed').value);
     localStorage.setItem('colorSegments', JSON.stringify(window.colorSegments)); // Save color settings
-    localStorage.setItem('colorStep', window.colorStep);
+    localStorage.setItem('colorStep', document.getElementById('colorStep').value);
     resumeAnimation();
 }
 
@@ -100,17 +89,7 @@ function loadSettings() {
         if (Array.isArray(cs)) window.colorSegments = cs;
     } catch (e) {}
     let step = localStorage.getItem('colorStep');
-/*
-    if (step) window.colorStep = parseInt(step);
-    let step = parseInt(localStorage.getItem('colorStep'), 10);
- */
-    setColorStepFromUpdation(step);
+    document.getElementById('colorStep').value = step;
     if (typeof renderColorSegments === "function") renderColorSegments();
     if (typeof updateColorConfig === "function") updateColorConfig();
-}
-
-// On loadSettings/loadPreset:
-function setColorStepFromUpdation(val) {
-    window.colorStep = (val && val >= 1) ? val : 1;
-    document.getElementById('colorStep').value = window.colorStep;
 }

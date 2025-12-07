@@ -69,16 +69,16 @@
                   <output type="number" id="time-stat" style="width:740px;"></output>
                 </label>
                 <label style="display:block;margin-top:6px;">
-                  ON:
+                  AVG RADIUS:
                   <output type="number" id="on-stat" style="width:740px;"></output>
                 </label>
                 <label style="display:block;margin-top:6px;">
-                  HIT:
+                  AVG ROTATION:
                   <output type="number" id="hit-stat" style="width:740px;"></output>
                 </label>
                 <label style="display:block;margin-top:6px;">
-                  PUSHED:
-                  <output type="number" id="pushed-stat" style="width:740px;"></output>
+                  POSTED:
+                  <output type="number" id="posted-stat" style="width:740px;"></output>
                 </label>
                 <label style="display:block;margin-top:6px;">
                   Trail Length:
@@ -86,14 +86,16 @@
                 </label>
             </div>
             <div>
-                <button id="control-toggle" type="button">Show Settings</button>
+                <button id="control-toggle" type="button">Hide Settings</button>
                 <div id="controls">
                     <div style="margin-bottom:16px;" id="color-controls">
                         <h4>Color Segments</h4>
                         <div id="colorSegmentsContainer"></div>
                         <button id="addColorSegmentBtn" type="button">Add Segment</button>
-                        <label style="display:block;margin-top:10px;">
-                            Color Step: <input type="number" id="colorStep" min="1" value="1" style="width:90px;">
+                    </div>
+                    <div style="margin-top:10px;" id="colorStep-control">
+                        <label>
+                            Color Step: <input type="number" id="colorStep" style="width:90px;">
                         </label>
                     </div>
                     <table id="vector-controls">
@@ -109,11 +111,6 @@
                         <!-- Vector rows inserted dynamically -->
                         </tbody>
                     </table>
-<!--
-                    <label>
-                        Snake Length: <input type="number" id="snakeLength" min="2" max="10000" value="300">
-                    </label>
- -->
                     <label>
                         Snake Length: <input type="number" id="snakeLength" style="width:90px;">
                     </label>

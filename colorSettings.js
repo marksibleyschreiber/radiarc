@@ -1,8 +1,7 @@
 // colorSettings.js
-// UI controls for color segments (delete, insert, update) and colorStep
+// UI controls for color segments (delete, insert, update) and color Step
 
 window.colorSegments = [{ length: 10, pixelColor: [255, 0, 0] }];
-window.colorStep = 1;
 
 // Render color segments panel
 function renderColorSegments() {
@@ -51,16 +50,6 @@ function renderColorSegments() {
         row.appendChild(delBtn);
         container.appendChild(row);
     });
-    // ColorStep input
-    const stepInput = document.getElementById('colorStep');
-    stepInput.value = window.colorStep;
-    stepInput.oninput = (e) => {
-        window.colorStep = parseInt(e.target.value) || 1;
-/*
-        renderColorSegments();
- */
-        updateColorConfig();
-    };
 }
 
 function rgbToHex(rgbArr) {
@@ -86,29 +75,15 @@ function addColorSegment() {
 // Update color config in sketch.js
 function updateColorConfig() {
     if (typeof setColorConfigFromControls === "function") {
-        setColorConfigFromControls({ colorSegments: window.colorSegments, colorStep: window.colorStep });
+        setColorConfigFromControls(window.colorSegments);
     }
 }
 
-// Handle colorStep input
+// Handle color Step input
 function setupColorControls() {
-    // Initial render
-    // renderColorSegments();
-
     // Add segment button
     const addBtn = document.getElementById('addColorSegmentBtn');
     addBtn.onclick = addColorSegment;
-
-    // ColorStep input
-    const stepInput = document.getElementById('colorStep');
-    stepInput.value = window.colorStep;
-    stepInput.oninput = (e) => {
-        window.colorStep = parseInt(e.target.value) || 1;
-/*
-        renderColorSegments();
- */
-        updateColorConfig();
-    };
 }
 
 // On DOM ready
