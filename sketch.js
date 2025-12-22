@@ -12,6 +12,7 @@ let time = -1;
 let onsize = 0;
 let cycleLength = time + 1;
 let maxTrailLength = 0;
+var lastTL = maxTrailLength;
 let pixelSize = 2;
 
 // Color control variables
@@ -118,7 +119,12 @@ function resetVectors() {
     nominalCycleLength = LCM;
     pixelSize = zParseInt(document.getElementById('pixelSize').value, 1);
     let len = zParseInt(document.getElementById('snakeLength').value, 0);
-    if (!isNaN(len) && len >= 1) maxTrailLength = len;
+    if (!isNaN(len) && len >= 0) maxTrailLength = len;
+    if ( maxTrailLength != lastTL && (maxTrailLength === 0 || lastTL === 0)) {
+        background(30);
+        colorIndex = 0;
+    }
+    lastTL = maxTrailLength;
 }
 
 function draw() {
@@ -146,24 +152,8 @@ function draw() {
     const colorStep = getColorStep();
 
     if (vectors.length > 0 && fullColorArray.length > 0 && drawSpeed > 0) {
-        let excess = 0;
-        for (let step = 0; step < drawSpeed; step++) {
-            var resetClock;
-            // Eliminate excess pixel
-            if (trail.length - excess >= maxTrailLength) {
-                let stop = trail[excess];
-                excess += 1;
-                while (stopHistory.get(`${stop.xx},${stop.yy}`).dz < 1 && trail.length - excess >= maxTrailLength)
-                {
-                    stop = trail[excess];
-                    excess += 1;
-                }
-                erasePixel(stop.xx, stop.yy, stopHistory.get(`${stop.xx},${stop.yy}`).pz);
-                stopHistory.get(`${stop.xx},${stop.yy}`).dz = 0;
-                stopHistory.get(`${stop.xx},${stop.yy}`).pz = 0;
-            }
-            // Get new targeted pixel stop
-            if (trail.length - excess < maxTrailLength) {
+        if (maxTrailLength < 1) {
+            for (let step = 0; step < drawSpeed; step++) {
                 resetClock = 1;
                 let _x = centerX, _y = centerY;
                 for (let v of vectors) {
@@ -177,13 +167,11 @@ function draw() {
                 let rounded = roundXY(_x, _y);
                 let head = { xx: rounded._x, yy: rounded._y, pixelSize };
                 drawPixel(head.xx, head.yy, head.pixelSize, colorStep);
-                trail.push(head);
                 let sKey = `${head.xx},${head.yy}`;
                 if (!stopHistory.has(sKey)) stopHistory.set(sKey, { dz: 0, pz: 0 });
                 stopHistory.get(sKey).dz += 1;
                 let pz = stopHistory.get(sKey).pz;
                 stopHistory.get(sKey).pz = Math.max(pz, head.pixelSize);
-                // Update cycle counts
                 if (resetClock) {
                     cycleLength = time + 1;
                     time = -1;
@@ -193,10 +181,64 @@ function draw() {
             colorIndex += 1;
             if (colorIndex % fullColorArray.length === 0) colorIndex = 0;
         }
-        trail.splice(0, excess);
+        else {
+            let excess = 0;
+            for (let step = 0; step < drawSpeed; step++) {
+                var resetClock;
+                // Eliminate excess pixel
+                if (trail.length - excess >= maxTrailLength) {
+                    let stop = trail[excess];
+                    excess += 1;
+                    while (stopHistory.get(`${stop.xx},${stop.yy}`).dz < 1 && trail.length - excess >= maxTrailLength)
+                    {
+                        stop = trail[excess];
+                        excess += 1;
+                    }
+                    erasePixel(stop.xx, stop.yy, stopHistory.get(`${stop.xx},${stop.yy}`).pz);
+                    stopHistory.get(`${stop.xx},${stop.yy}`).dz = 0;
+                    stopHistory.get(`${stop.xx},${stop.yy}`).pz = 0;
+                }
+                // Get new targeted pixel stop
+                if (trail.length - excess < maxTrailLength) {
+                    resetClock = 1;
+                    let _x = centerX, _y = centerY;
+                    for (let v of vectors) {
+                        let m = ((time + 1) * v.N) % v.D;
+                        if (m !== 0 ) resetClock = 0;
+                        let angle = v.initialAngle + m;
+                        let radius = scaleFactor * v.radius;
+                        _x += radius * Math.cos((TWO_PI * angle) / v.D);
+                        _y += radius * Math.sin((TWO_PI * angle) / v.D);
+                    }
+                    let rounded = roundXY(_x, _y);
+                    let head = { xx: rounded._x, yy: rounded._y, pixelSize };
+                    drawPixel(head.xx, head.yy, head.pixelSize, colorStep);
+                    trail.push(head);
+                    let sKey = `${head.xx},${head.yy}`;
+                    if (!stopHistory.has(sKey)) stopHistory.set(sKey, { dz: 0, pz: 0 });
+                    stopHistory.get(sKey).dz += 1;
+                    let pz = stopHistory.get(sKey).pz;
+                    stopHistory.get(sKey).pz = Math.max(pz, head.pixelSize);
+                    // Update cycle counts
+                    if (resetClock) {
+                        cycleLength = time + 1;
+                        time = -1;
+                    }
+                    time += 1;
+                    colorIndex += 1;
+                    if (colorIndex % fullColorArray.length === 0) colorIndex = 0;
+                }
+/*
+                colorIndex += 1;
+                if (colorIndex % fullColorArray.length === 0) colorIndex = 0;
+ */
+            }
+            trail.splice(0, excess);
+        }
     }
     document.getElementById('lcm-stat').textContent = nominalCycleLength.toString();
     document.getElementById('time-stat').textContent = time;
+    document.getElementById('posted-stat').textContent = stopHistory.size;
     document.getElementById('length-stat').textContent = trail.length;
 }
 

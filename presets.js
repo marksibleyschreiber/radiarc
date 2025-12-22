@@ -81,9 +81,15 @@ function loadPreset(index) {
         return;
     }
     for (let i = 0; i < window.vectorCount; i++) {
-        document.getElementById(`length${i}`).value = preset.vectorParams[i].length;
-        document.getElementById(`N${i}`).value = preset.vectorParams[i].N;
-        document.getElementById(`D${i}`).value = preset.vectorParams[i].D;
+        if (i < preset.vectorParams.length) {
+            document.getElementById(`length${i}`).value = preset.vectorParams[i].length;
+            document.getElementById(`N${i}`).value = preset.vectorParams[i].N;
+            document.getElementById(`D${i}`).value = preset.vectorParams[i].D;
+        } else {
+            document.getElementById(`length${i}`).value = 1;
+            document.getElementById(`N${i}`).value = 1;
+            document.getElementById(`D${i}`).value = 0;
+        }
         flashInput(`length${i}`);
         flashInput(`N${i}`);
         flashInput(`D${i}`);

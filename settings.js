@@ -1,6 +1,6 @@
 // settings.js
 
-window.vectorCount = 8;
+window.vectorCount = 9;
 
 // Utility to pause and resume animation safely
 function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
@@ -67,22 +67,22 @@ function loadSettings() {
       vectorParams = JSON.parse(localStorage.getItem('vectorParams'));
     } catch (e) {}
     for (let i = 0; i < window.vectorCount; i++) {
-        if (vectorParams && vectorParams[i]) {
-            document.getElementById(`length${i}`).value = vectorParams[i].length ?? 100;
+        if (vectorParams && vectorParams[i] && i < vectorParams.length) {
+            document.getElementById(`length${i}`).value = vectorParams[i].length ?? 1;
             document.getElementById(`N${i}`).value = vectorParams[i].N ?? 1;
-            document.getElementById(`D${i}`).value = vectorParams[i].D ?? 300;
+            document.getElementById(`D${i}`).value = vectorParams[i].D ?? 0;
         } else {
-            document.getElementById(`length${i}`).value = 100;
+            document.getElementById(`length${i}`).value = 1;
             document.getElementById(`N${i}`).value = 1;
-            document.getElementById(`D${i}`).value = 300;
+            document.getElementById(`D${i}`).value = 0;
         }
     }
     let pixelSize = localStorage.getItem('pixelSize');
     if (pixelSize) document.getElementById('pixelSize').value = pixelSize;
     let snakeLength = localStorage.getItem('snakeLength');
-    if (snakeLength) document.getElementById('snakeLength').value = snakeLength;
+    if (!isNaN(snakeLength) && snakeLength >= 0) document.getElementById('snakeLength').value = snakeLength;
     let drawSpeed = localStorage.getItem('drawSpeed');
-    if (drawSpeed) document.getElementById('drawSpeed').value = drawSpeed;
+    if (!isNaN(drawSpeed) && drawSpeed >= 0) document.getElementById('drawSpeed').value = drawSpeed;
     // Load color settings
     try {
         let cs = JSON.parse(localStorage.getItem('colorSegments'));

@@ -1,45 +1,25 @@
-# Radiarc
+# Epicycle Snake
 
-Radiarc — Articulated Radii Jewel
+A browser-based snake game using p5.js and localStorage.
 
-Radiarc is a small interactive web app that generates jewel-like graphical forms by composing articulated radii (a spirograph‑family variant). It runs in the browser and exports high‑resolution PNG images. The goal of this repository is to evolve Radiarc into a lightweight creative tool with presets, SVG export, shareable links, and a small collection of curated palettes and examples.
+## Play online
+[Live site](https://marksibleyschreiber.github.io/radiarc/)
 
-Features (initial)
-- Single-file interactive web app (index.html) drawing on an HTML5 Canvas
-- Controls for base radius (R), articulation (r), arm offset (d), layers, color, line width, and animation
-- Randomize, Redraw, Clear and Export PNG
-- Keyboard shortcuts: r = randomize, c = clear, Ctrl/Cmd+S = export
+## How to Run Locally
+1. Clone this repo.
+2. Open `index.html` in your browser.
 
-Planned next steps (roadmap)
-- Presets & shareable URL encoding
-- SVG (vector) export
-- Responsive layout and mobile-friendly controls
-- Palette system + curated presets/examples
-- GitHub Pages deployment and small demo site
-- Tests and CI for build / deploy steps (if we add a build step)
+## Controls
+1. In "Settings", use "Import Presets" to import "radiarc_preset.json".
+2. Use "Preset name" for a list of choices, then "Load Preset".
+3. Experiment with control settings.
+    a) Add or Delete color segment.
+    b) Adjust Color Step.
+    c) Suppress a vector by setting D to zero.
+    d) Test various vector Length, N and D.
+    e) Suppress erasures by setting "Snake Length" to zero.
+    f) Test various "Draw Speed" values.
+    g) Manage presets. Name and save your own creations.
 
-Getting started (local)
-1. Clone this repo:
-   git clone https://github.com/<you>/radiarc.git
-2. Open index.html in a modern browser (Chrome, Firefox, Edge, Safari).
-3. Tweak sliders to explore shapes. Use Export to save a PNG.
-
-Development workflow
-- Main branch: `main`
-- Feature branches: `feature/<name>` (e.g., `feature/svg-export`)
-- Open PRs against `main` with small, focused changes.
-- Use the issue templates for bug reports and feature requests.
-
-Presets
-- Presets are simple JSON objects (examples in `presets/`) containing the core parameters used by the UI. These let you share and re-create jewels.
-
-Contributing
-See CONTRIBUTING.md for contribution guidelines and a simple development checklist.
-
-License
-This project is MIT licensed. See LICENSE for details.
-
-Maintainer
-- marksibleyschreiber
-
-If you'd like, I can create an initial set of GitHub issues from the roadmap above so you have a tracked backlog.
+## Credits
+Built with [p5.js](https://p5js.org/)

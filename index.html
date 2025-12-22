@@ -29,8 +29,10 @@
             margin: 10px 0 0 0;
             display: block;
         }
+/*
         #lcmstat {
             }
+ */
         #controls {
             min-width: 400px;
             margin-top: 0;
@@ -60,6 +62,7 @@
             <div>
                 <div id="p5canvas"></div>
                 <button id="clearBtn" type="button">Clear &amp; Reset</button>
+                <label style="displan:block">
                 <label style="display:block;margin-top:6px;">
                   LCM:
                   <output type="number" id="lcm-stat" style="width:740px;"></output>
@@ -118,7 +121,7 @@
                         Pixel Size: <input type="number" id="pixelSize" min="1" max="100" value="10">
                     </label>
                     <label>
-                        Draw Speed (steps/frame): <input type="number" id="drawSpeed" min="1" max="1000" value="1">
+                        Draw Speed (steps/frame): <input type="number" id="drawSpeed" min="0" max="1000000" value="1" style="width:90px">
                     </label>
                     <div style="margin-bottom:16px;">
                         <label>
