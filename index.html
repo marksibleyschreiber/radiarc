@@ -25,14 +25,16 @@
             justify-content: center;
             margin: 0;
         }
-        #clearBtn {
-            margin: 10px 0 0 0;
-            display: block;
+        #button-output-wrapper {
+            display: flex;
+            align-items: center; /* Ensure the button and output are vertically aligned */
+            justify-content: flex-start; /* Start from the left */
+            gap: 12px; /* Provides spacing between the button and output */
+            margin-bottom: 10px;
+
+            /* Ensure the dimensions match the desired layout space */
+            width: 400px ;
         }
-/*
-        #lcmstat {
-            }
- */
         #controls {
             min-width: 400px;
             margin-top: 0;
@@ -61,8 +63,10 @@
         <div id="main-wrap">
             <div>
                 <div id="p5canvas"></div>
-                <button id="clearBtn" type="button">Clear &amp; Reset</button>
-                <label style="displan:block">
+                <div id="button-output-wrapper">
+                    <button id="clearBtn" type="button">Clear &amp; Reset</button>
+                    <output type="number" id="title-stat"></output>
+                </div>
                 <label style="display:block;margin-top:6px;">
                   LCM:
                   <output type="number" id="lcm-stat" style="width:740px;"></output>
@@ -120,8 +124,8 @@
                     <label>
                         Pixel Size: <input type="number" id="pixelSize" min="1" max="100" value="10">
                     </label>
-                    <label>
-                        Draw Speed (steps/frame): <input type="number" id="drawSpeed" min="0" max="1000000" value="1" style="width:90px">
+                    <label style="display:block;margin-top:6px;">
+                        Draw Speed: <input type="number" id="drawSpeed" min="0" max="1000000" value="1" style="width:90px">
                     </label>
                     <div style="margin-bottom:16px;">
                         <label>

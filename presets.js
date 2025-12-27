@@ -13,12 +13,6 @@ function flashInput(id) {
     setTimeout(() => { el.style.backgroundColor = ""; }, 450);
 }
 
-/*
-// Helper to pause/resume animation if available
-function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
-function resumeAnimation() { if (typeof loop === "function") loop(); }
- */
-
 function getPresets() {
     let presets = [];
     try {
@@ -45,13 +39,14 @@ function savePreset(name) {
     // --- NOW SAVE CURRENT COLOR SETTINGS ---
     let colorSegments = Array.isArray(window.colorSegments)
         ? window.colorSegments.map(seg =>
-            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] })) // Deep copy
+            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor)
+            ? [...seg.pixelColor] : [255, 0, 0] })) // Deep copy
         : [{ length: 1, pixelColor: [255, 0, 0] }];
 
     let presets = getPresets();
     let idx = presets.findIndex(p => p.name === name);
     let colorStep = document.getElementById('colorStep').value;
-    let colorIndex = 0;
+//     let colorIndex = 0;
     let presetObj = {
         name,
         vectorParams,
@@ -59,8 +54,7 @@ function savePreset(name) {
         snakeLength,
         drawSpeed,
         colorSegments, // Save user's actual color segments
-        colorStep,     // Save user's actual colorStep
-        colorIndex     // Save user's actual colorIndex
+        colorStep      // Save user's actual colorStep
     };
     if (idx !== -1) {
         presets[idx] = presetObj;
@@ -80,6 +74,8 @@ function loadPreset(index) {
         resumeAnimation();
         return;
     }
+    document.getElementById('presetName').value = preset.name;
+    document.getElementById('title-stat').value = preset.name;
     for (let i = 0; i < window.vectorCount; i++) {
         if (i < preset.vectorParams.length) {
             document.getElementById(`length${i}`).value = preset.vectorParams[i].length;
@@ -102,9 +98,11 @@ function loadPreset(index) {
     flashInput('drawSpeed');
 
     // --- RESTORE COLOR SETTINGS FROM PRESET ---
-    if (typeof setColorConfigFromPreset === "function") {
-        setColorConfigFromPreset(preset);
-    }
+    window.colorSegments = Array.isArray(preset.colorSegments)
+        ? preset.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor)
+            ? [...seg.pixelColor] : [255, 0, 0] }))
+        : [{ length: 1, pixelColor: [255, 0, 0] }];
     document.getElementById('colorStep').value = preset.colorStep;
     // Re-render color segments UI if the function is available
     if (typeof renderColorSegments === "function") {
@@ -195,7 +193,8 @@ window.addEventListener('DOMContentLoaded', () => {
             const name = document.getElementById('presetName').value.trim();
             if (!name) { alert("Please give the preset a name."); return; }
             savePreset(name);
-            document.getElementById('presetName').value = "";
+            document.getElementById('presetName').value = name;
+            document.getElementById('title-stat').value = name;
         };
     }
     const loadBtn = document.getElementById('loadPresetBtn');

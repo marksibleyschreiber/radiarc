@@ -56,7 +56,8 @@ function saveSettings() {
     localStorage.setItem('pixelSize', document.getElementById('pixelSize').value);
     localStorage.setItem('snakeLength', document.getElementById('snakeLength').value);
     localStorage.setItem('drawSpeed', document.getElementById('drawSpeed').value);
-    localStorage.setItem('colorSegments', JSON.stringify(window.colorSegments)); // Save color settings
+    localStorage.setItem('presetName', document.getElementById('presetName').value);
+    localStorage.setItem('colorSegments', JSON.stringify(window.colorSegments));
     localStorage.setItem('colorStep', document.getElementById('colorStep').value);
     resumeAnimation();
 }
@@ -83,6 +84,10 @@ function loadSettings() {
     if (!isNaN(snakeLength) && snakeLength >= 0) document.getElementById('snakeLength').value = snakeLength;
     let drawSpeed = localStorage.getItem('drawSpeed');
     if (!isNaN(drawSpeed) && drawSpeed >= 0) document.getElementById('drawSpeed').value = drawSpeed;
+    // Load preset name
+    let presetName = localStorage.getItem('presetName');
+    if (presetName) document.getElementById('presetName').value = presetName;
+    if (presetName) document.getElementById('title-stat').value = presetName;
     // Load color settings
     try {
         let cs = JSON.parse(localStorage.getItem('colorSegments'));

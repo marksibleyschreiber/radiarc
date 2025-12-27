@@ -6,7 +6,8 @@ const stopHistory = new Map();
 
 let vectors = [];
 let nominalCycleLength = 0n;
-let trail = [];
+let trail= [];
+let trailLength = 0;
 let posted = 0;
 let time = -1;
 let onsize = 0;
@@ -17,31 +18,12 @@ let pixelSize = 2;
 
 // Color control variables
 window.colorSegments = window.colorSegments || [{ length: 1, pixelColor: [255, 0, 0] }];
-let colorIndex = 0;
-let fullColorArray = buildColorArray(window.colorSegments);
 
 function getColorStep() {
     const el = document.getElementById('colorStep');
     if (!el) return 1;
     const n = parseInt(el.value, 10);
     return (isNaN(n) || n < 1) ? 1 : n;
-}
-
-function setColorConfigFromControls(colorSeg) {
-    window.colorSegments = Array.isArray(colorSeg)
-        ? colorSeg.map(seg =>
-            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] }))
-        : [{ length: 1, pixelColor: [255, 0, 0] }];
-    fullColorArray = buildColorArray(window.colorSegments);
-}
-
-function setColorConfigFromPreset(preset) {
-    window.colorSegments = Array.isArray(preset.colorSegments)
-        ? preset.colorSegments.map(seg =>
-            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor) ? [...seg.pixelColor] : [255, 0, 0] }))
-        : [{ length: 1, pixelColor: [255, 0, 0] }];
-    colorIndex = 0;
-    fullColorArray = buildColorArray(window.colorSegments);
 }
 
 function roundXY(_x, _y) {
@@ -122,7 +104,6 @@ function resetVectors() {
     if (!isNaN(len) && len >= 0) maxTrailLength = len;
     if ( maxTrailLength != lastTL && (maxTrailLength === 0 || lastTL === 0)) {
         background(30);
-        colorIndex = 0;
     }
     lastTL = maxTrailLength;
 }
@@ -150,8 +131,11 @@ function draw() {
     // Live color update from colorSettings
     updateColorConfig();
     const colorStep = getColorStep();
+    const colorBarLength = window.colorSegments.reduce((sum, arr) => sum + arr.length, 0);
 
-    if (vectors.length > 0 && fullColorArray.length > 0 && drawSpeed > 0) {
+    if (vectors.length > 0 && colorBarLength > 0 && drawSpeed > 0) {
+        var colorIndex;
+        var resetClock;
         if (maxTrailLength < 1) {
             for (let step = 0; step < drawSpeed; step++) {
                 resetClock = 1;
@@ -166,7 +150,8 @@ function draw() {
                 }
                 let rounded = roundXY(_x, _y);
                 let head = { xx: rounded._x, yy: rounded._y, pixelSize };
-                drawPixel(head.xx, head.yy, head.pixelSize, colorStep);
+                colorIndex = ((time + 1) * colorStep) % colorBarLength;
+                drawPixel(head, colorIndex);
                 let sKey = `${head.xx},${head.yy}`;
                 if (!stopHistory.has(sKey)) stopHistory.set(sKey, { dz: 0, pz: 0 });
                 stopHistory.get(sKey).dz += 1;
@@ -178,13 +163,10 @@ function draw() {
                 }
                 time += 1;
             }
-            colorIndex += 1;
-            if (colorIndex % fullColorArray.length === 0) colorIndex = 0;
         }
         else {
             let excess = 0;
             for (let step = 0; step < drawSpeed; step++) {
-                var resetClock;
                 // Eliminate excess pixel
                 if (trail.length - excess >= maxTrailLength) {
                     let stop = trail[excess];
@@ -212,7 +194,8 @@ function draw() {
                     }
                     let rounded = roundXY(_x, _y);
                     let head = { xx: rounded._x, yy: rounded._y, pixelSize };
-                    drawPixel(head.xx, head.yy, head.pixelSize, colorStep);
+                    colorIndex = ((time + 1) * colorStep) % colorBarLength;
+                    drawPixel(head, colorIndex);
                     trail.push(head);
                     let sKey = `${head.xx},${head.yy}`;
                     if (!stopHistory.has(sKey)) stopHistory.set(sKey, { dz: 0, pz: 0 });
@@ -225,13 +208,7 @@ function draw() {
                         time = -1;
                     }
                     time += 1;
-                    colorIndex += 1;
-                    if (colorIndex % fullColorArray.length === 0) colorIndex = 0;
                 }
-/*
-                colorIndex += 1;
-                if (colorIndex % fullColorArray.length === 0) colorIndex = 0;
- */
             }
             trail.splice(0, excess);
         }
@@ -243,10 +220,21 @@ function draw() {
 }
 
 // Draw pixel using color array (from colorSegments)
-function drawPixel(_x, _y, pixelSize, step) {
-    let color = fullColorArray[(step * colorIndex) % fullColorArray.length];
+function drawPixel(head, colorIndex) {
+    var pixelColor;
+    let _x = head.xx;
+    let _y = head.yy;
+    let pixelSize = head.pixelSize;
+    let idx = colorIndex;
+    for (let seg of window.colorSegments){
+        if (idx >= seg.length) idx -= seg.length
+        else {
+            pixelColor = seg.pixelColor;
+            break;
+        }
+    }
     noStroke();
-    fill(...color);
+    fill(...pixelColor);
     rect(Math.round(_x - pixelSize / 2), Math.round(_y - pixelSize / 2), pixelSize, pixelSize);
 }
 
@@ -256,11 +244,11 @@ function erasePixel(_x, _y, pixelSize) {
     rect(Math.round(_x - pixelSize / 2), Math.round(_y - pixelSize / 2), pixelSize, pixelSize);
 }
 
-// function keyPressed() {
-//     if (key === 's') {
-//         saveCanvas('radiarc_epicycle_snake', 'png');
-//     }
-// }
+function keyPressed() {
+   if (key === 's' && keyIsDown(CONTROL)) {
+       saveCanvas(document.getElementById('presetName').value, 'png');
+   }
+}
 
 function clearAndReset() {
     background(30);

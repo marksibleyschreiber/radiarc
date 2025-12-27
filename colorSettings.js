@@ -19,8 +19,8 @@ function renderColorSegments() {
         lenInput.type = 'number';
         lenInput.min = '1';
         lenInput.value = seg.length;
-        lenInput.style.width = '50px';
-        lenInput.onchange = (e) => {
+        lenInput.style.width = '90px';
+        lenInput.oninput = (e) => {
             window.colorSegments[idx].length = parseInt(e.target.value) || 1;
             updateColorConfig();
         };
@@ -74,9 +74,11 @@ function addColorSegment() {
 
 // Update color config in sketch.js
 function updateColorConfig() {
-    if (typeof setColorConfigFromControls === "function") {
-        setColorConfigFromControls(window.colorSegments);
-    }
+    window.colorSegments = Array.isArray(window.colorSegments)
+        ? window.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor)
+            ? [...seg.pixelColor] : [255, 0, 0] }))
+        : [{ length: 1, pixelColor: [255, 0, 0] }];
 }
 
 // Handle color Step input

@@ -789,6 +789,11 @@
         "length": "1",
         "N": "-10",
         "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
@@ -812,7 +817,7 @@
         ]
       }
     ],
-    "colorStep": 1800,
+    "colorStep": "16",
     "colorIndex": 0
   },
   {
@@ -964,143 +969,28 @@
     "vectorParams": [
       {
         "length": "4",
-        "N": "180",
-        "D": "3600"
+        "N": "36",
+        "D": "720"
       },
       {
         "length": "4",
-        "N": "-180",
-        "D": "3600"
+        "N": "-36",
+        "D": "720"
       },
       {
         "length": "2",
         "N": "180",
-        "D": "3602"
+        "D": "3603"
       },
       {
         "length": "2",
         "N": "-180",
-        "D": "3598"
-      },
-      {
-        "length": "1",
-        "N": "-2",
-        "D": "0"
+        "D": "3597"
       },
       {
         "length": "1",
         "N": "1",
         "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      }
-    ],
-    "pixelSize": "2",
-    "snakeLength": "20000",
-    "drawSpeed": "8000",
-    "colorSegments": [
-      {
-        "length": 1000,
-        "pixelColor": [
-          255,
-          250,
-          250
-        ]
-      }
-    ],
-    "colorStep": 1,
-    "colorIndex": 0
-  },
-  {
-    "name": "Taking Turns",
-    "vectorParams": [
-      {
-        "length": "48",
-        "N": "225",
-        "D": "18000"
-      },
-      {
-        "length": "1",
-        "N": "-225",
-        "D": "18000"
-      },
-      {
-        "length": "12",
-        "N": "90",
-        "D": "1801"
-      },
-      {
-        "length": "12",
-        "N": "-90",
-        "D": "1799"
-      },
-      {
-        "length": "1",
-        "N": "-2",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      }
-    ],
-    "pixelSize": "2",
-    "snakeLength": "45000",
-    "drawSpeed": "1000",
-    "colorSegments": [
-      {
-        "length": 1000,
-        "pixelColor": [
-          255,
-          250,
-          250
-        ]
-      }
-    ],
-    "colorStep": 1,
-    "colorIndex": 0
-  },
-  {
-    "name": "what is this",
-    "vectorParams": [
-      {
-        "length": "1",
-        "N": "13",
-        "D": "360003"
-      },
-      {
-        "length": "1",
-        "N": "11",
-        "D": "359997"
-      },
-      {
-        "length": "2",
-        "N": "-2560",
-        "D": "288800"
-      },
-      {
-        "length": "2",
-        "N": "25601",
-        "D": "288800"
       },
       {
         "length": "1",
@@ -1124,8 +1014,72 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "77723",
-    "drawSpeed": "110",
+    "snakeLength": "48000",
+    "drawSpeed": "3000",
+    "colorSegments": [
+      {
+        "length": 1000,
+        "pixelColor": [
+          255,
+          250,
+          250
+        ]
+      }
+    ],
+    "colorStep": "1"
+  },
+  {
+    "name": "what is this",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "31",
+        "D": "3600110"
+      },
+      {
+        "length": "1",
+        "N": "29",
+        "D": "3599890"
+      },
+      {
+        "length": "1",
+        "N": "-102401",
+        "D": "1155201"
+      },
+      {
+        "length": "1",
+        "N": "102401",
+        "D": "1155199"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "468000",
+    "drawSpeed": "1100",
     "colorSegments": [
       {
         "length": 200,
@@ -1152,8 +1106,7 @@
         ]
       }
     ],
-    "colorStep": 109,
-    "colorIndex": 0
+    "colorStep": "109"
   },
   {
     "name": "Palatable",
@@ -1493,11 +1446,16 @@
         "length": "1",
         "N": "1",
         "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
     "snakeLength": "363636",
-    "drawSpeed": "20",
+    "drawSpeed": "500",
     "colorSegments": [
       {
         "length": 2100,
@@ -1508,7 +1466,7 @@
         ]
       }
     ],
-    "colorStep": 300,
+    "colorStep": "300",
     "colorIndex": 0
   },
   {
@@ -1901,7 +1859,7 @@
         ]
       }
     ],
-    "colorStep": "14",
+    "colorStep": "23",
     "colorIndex": 0
   },
   {
@@ -2022,82 +1980,6 @@
       }
     ],
     "colorStep": "",
-    "colorIndex": 0
-  },
-  {
-    "name": "Dane",
-    "vectorParams": [
-      {
-        "length": "4",
-        "N": "180",
-        "D": "3600"
-      },
-      {
-        "length": "4",
-        "N": "-180",
-        "D": "3600"
-      },
-      {
-        "length": "2",
-        "N": "180",
-        "D": "3602"
-      },
-      {
-        "length": "2",
-        "N": "-180",
-        "D": "3598"
-      },
-      {
-        "length": "1",
-        "N": "-2",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      }
-    ],
-    "pixelSize": "2",
-    "snakeLength": "64799980",
-    "drawSpeed": "2000",
-    "colorSegments": [
-      {
-        "length": 100,
-        "pixelColor": [
-          248,
-          240,
-          13
-        ]
-      },
-      {
-        "length": 101,
-        "pixelColor": [
-          255,
-          0,
-          0
-        ]
-      },
-      {
-        "length": 99,
-        "pixelColor": [
-          128,
-          0,
-          255
-        ]
-      }
-    ],
-    "colorStep": "225",
     "colorIndex": 0
   },
   {
@@ -2726,10 +2608,15 @@
         "length": "1",
         "N": "5117",
         "D": "215990"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "21600",
+    "snakeLength": "7200",
     "drawSpeed": "600",
     "colorSegments": [
       {
@@ -2749,8 +2636,7 @@
         ]
       }
     ],
-    "colorStep": "43",
-    "colorIndex": 0
+    "colorStep": "134"
   },
   {
     "name": "keeper",
@@ -2794,6 +2680,11 @@
         "length": "1",
         "N": "9331",
         "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
@@ -2825,8 +2716,7 @@
         ]
       }
     ],
-    "colorStep": "44",
-    "colorIndex": 0
+    "colorStep": "69"
   },
   {
     "name": "if i loved you",
@@ -2870,6 +2760,11 @@
         "length": "1",
         "N": "9331",
         "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
@@ -2901,8 +2796,7 @@
         ]
       }
     ],
-    "colorStep": "69",
-    "colorIndex": 0
+    "colorStep": "345"
   },
   {
     "name": "katzy",
@@ -3166,11 +3060,16 @@
         "length": "1",
         "N": "5117",
         "D": "1079900"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
     "snakeLength": "0",
-    "drawSpeed": "800",
+    "drawSpeed": "4000",
     "colorSegments": [
       {
         "length": 1000,
@@ -3197,8 +3096,7 @@
         ]
       }
     ],
-    "colorStep": "4",
-    "colorIndex": 0
+    "colorStep": "40"
   },
   {
     "name": "sketch",
@@ -3214,33 +3112,38 @@
         "D": "14401"
       },
       {
-        "length": "3",
-        "N": "13",
-        "D": "0"
-      },
-      {
-        "length": "3",
-        "N": "13",
-        "D": "0"
-      },
-      {
-        "length": "-1",
-        "N": "1800",
+        "length": "1",
+        "N": "1",
         "D": "0"
       },
       {
         "length": "1",
-        "N": "-300",
+        "N": "1",
         "D": "0"
       },
       {
-        "length": "10",
-        "N": "-3",
+        "length": "1",
+        "N": "1",
         "D": "0"
       },
       {
-        "length": "-10",
-        "N": "-3",
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
         "D": "0"
       }
     ],
@@ -3281,8 +3184,7 @@
         ]
       }
     ],
-    "colorStep": "11273",
-    "colorIndex": 0
+    "colorStep": "869"
   },
   {
     "name": "coloraster",
@@ -3326,6 +3228,11 @@
         "length": "1",
         "N": "9331",
         "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
@@ -3365,8 +3272,7 @@
         ]
       }
     ],
-    "colorStep": "7",
-    "colorIndex": 0
+    "colorStep": "464"
   },
   {
     "name": "allday",
@@ -3910,8 +3816,7 @@
         ]
       }
     ],
-    "colorStep": "49",
-    "colorIndex": 0
+    "colorStep": "79"
   },
   {
     "name": "redaction",
@@ -3967,7 +3872,7 @@
     "drawSpeed": "2000",
     "colorSegments": [
       {
-        "length": 1000,
+        "length": 65537,
         "pixelColor": [
           255,
           0,
@@ -3975,7 +3880,7 @@
         ]
       },
       {
-        "length": 1000,
+        "length": 65535,
         "pixelColor": [
           255,
           225,
@@ -3983,8 +3888,7 @@
         ]
       }
     ],
-    "colorStep": "30",
-    "colorIndex": 0
+    "colorStep": "182"
   },
   {
     "name": "marriage",
@@ -4037,7 +3941,659 @@
     ],
     "pixelSize": "1",
     "snakeLength": "0",
+    "drawSpeed": "750",
+    "colorSegments": [
+      {
+        "length": 30000,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 25001,
+        "pixelColor": [
+          115,
+          0,
+          255
+        ]
+      }
+    ],
+    "colorStep": "23"
+  },
+  {
+    "name": "tequila",
+    "vectorParams": [
+      {
+        "length": "2",
+        "N": "2",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "17",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "-19",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "216031"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "215969"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "216029"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "0",
+    "drawSpeed": "4000",
+    "colorSegments": [
+      {
+        "length": 600,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 501,
+        "pixelColor": [
+          115,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 200,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 600,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 200,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 500,
+        "pixelColor": [
+          115,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 200,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "16",
+    "colorIndex": 0
+  },
+  {
+    "name": "snoopy",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "1",
+        "D": "21600"
+      },
+      {
+        "length": "-1",
+        "N": "-1",
+        "D": "21600"
+      },
+      {
+        "length": "2",
+        "N": "1",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "5",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "-7",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "-9",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "21600",
+    "drawSpeed": "400",
+    "colorSegments": [
+      {
+        "length": 50,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "50",
+    "colorIndex": 0
+  },
+  {
+    "name": "Hold still!",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "111",
+        "D": "216000"
+      },
+      {
+        "length": "-1",
+        "N": "-111",
+        "D": "216000"
+      },
+      {
+        "length": "2",
+        "N": "11",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "5",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "-7",
+        "D": "21600"
+      },
+      {
+        "length": "-1",
+        "N": "-111",
+        "D": "43270"
+      },
+      {
+        "length": "-1",
+        "N": "-111",
+        "D": "43230"
+      },
+      {
+        "length": "1",
+        "N": "111",
+        "D": "43270"
+      },
+      {
+        "length": "1",
+        "N": "111",
+        "D": "43230"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "2000",
     "drawSpeed": "200",
+    "colorSegments": [
+      {
+        "length": 50,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "50",
+    "colorIndex": 0
+  },
+  {
+    "name": "ring",
+    "vectorParams": [
+      {
+        "length": "8",
+        "N": "1040",
+        "D": "727272"
+      },
+      {
+        "length": "4",
+        "N": "48800",
+        "D": "727272"
+      },
+      {
+        "length": "1",
+        "N": "-48800",
+        "D": "727272"
+      },
+      {
+        "length": "4",
+        "N": "1040",
+        "D": "727343"
+      },
+      {
+        "length": "4",
+        "N": "1040",
+        "D": "727201"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "8600",
+    "drawSpeed": "1000",
+    "colorSegments": [
+      {
+        "length": 2100,
+        "pixelColor": [
+          30,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 2100,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 2100,
+        "pixelColor": [
+          85,
+          85,
+          85
+        ]
+      }
+    ],
+    "colorStep": "328",
+    "colorIndex": 0
+  },
+  {
+    "name": "so wierd",
+    "vectorParams": [
+      {
+        "length": "2",
+        "N": "301",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "-5719",
+        "D": "216000"
+      },
+      {
+        "length": "12",
+        "N": "286",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "5117",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "301",
+        "D": "216008"
+      },
+      {
+        "length": "1",
+        "N": "-5719",
+        "D": "215992"
+      },
+      {
+        "length": "1",
+        "N": "301",
+        "D": "216010"
+      },
+      {
+        "length": "1",
+        "N": "5117",
+        "D": "215990"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "0",
+    "drawSpeed": "1000",
+    "colorSegments": [
+      {
+        "length": 1000,
+        "pixelColor": [
+          251,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 1501,
+        "pixelColor": [
+          119,
+          19,
+          241
+        ]
+      }
+    ],
+    "colorStep": "79"
+  },
+  {
+    "name": "no less",
+    "vectorParams": [
+      {
+        "length": "2",
+        "N": "301",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "-8729",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "301",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "9331",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "301",
+        "D": "216031"
+      },
+      {
+        "length": "1",
+        "N": "-8729",
+        "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "301",
+        "D": "216031"
+      },
+      {
+        "length": "1",
+        "N": "9331",
+        "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "0",
+    "drawSpeed": "600",
+    "colorSegments": [
+      {
+        "length": 1500,
+        "pixelColor": [
+          251,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 1501,
+        "pixelColor": [
+          119,
+          19,
+          241
+        ]
+      },
+      {
+        "length": 1500,
+        "pixelColor": [
+          242,
+          99,
+          99
+        ]
+      }
+    ],
+    "colorStep": "345"
+  },
+  {
+    "name": "comix",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-1",
+        "N": "-2691",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-1",
+        "N": "3289",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216008"
+      },
+      {
+        "length": "-1",
+        "N": "-2691",
+        "D": "215992"
+      },
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216010"
+      },
+      {
+        "length": "-1",
+        "N": "3289",
+        "D": "215990"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "0",
+    "drawSpeed": "600",
+    "colorSegments": [
+      {
+        "length": 5000,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 1501,
+        "pixelColor": [
+          7,
+          76,
+          166
+        ]
+      },
+      {
+        "length": 5000,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 1500,
+        "pixelColor": [
+          255,
+          247,
+          0
+        ]
+      },
+      {
+        "length": 5000,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          255,
+          80,
+          80
+        ]
+      }
+    ],
+    "colorStep": "217"
+  },
+  {
+    "name": "fancy figure",
+    "vectorParams": [
+      {
+        "length": "2",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-24",
+        "N": "-2691",
+        "D": "216000"
+      },
+      {
+        "length": "29",
+        "N": "5",
+        "D": "16"
+      },
+      {
+        "length": "24",
+        "N": "3289",
+        "D": "216000"
+      },
+      {
+        "length": "-39",
+        "N": "299",
+        "D": "216008"
+      },
+      {
+        "length": "-24",
+        "N": "-2691",
+        "D": "215992"
+      },
+      {
+        "length": "16",
+        "N": "299",
+        "D": "216010"
+      },
+      {
+        "length": "-16",
+        "N": "3289",
+        "D": "215990"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "43200",
+    "drawSpeed": "2000",
     "colorSegments": [
       {
         "length": 1000,
@@ -4050,13 +4606,396 @@
       {
         "length": 1501,
         "pixelColor": [
-          115,
-          0,
-          255
+          157,
+          105,
+          221
         ]
       }
     ],
-    "colorStep": "4",
-    "colorIndex": 0
+    "colorStep": "625"
+  },
+  {
+    "name": "shrug",
+    "vectorParams": [
+      {
+        "length": "4",
+        "N": "36",
+        "D": "720"
+      },
+      {
+        "length": "4",
+        "N": "-36",
+        "D": "720"
+      },
+      {
+        "length": "2",
+        "N": "180",
+        "D": "3603"
+      },
+      {
+        "length": "2",
+        "N": "-180",
+        "D": "3597"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "1536000",
+    "drawSpeed": "3000",
+    "colorSegments": [
+      {
+        "length": 1000,
+        "pixelColor": [
+          195,
+          197,
+          243
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          238,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          95,
+          109,
+          242
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          0,
+          255,
+          170
+        ]
+      }
+    ],
+    "colorStep": "200"
+  },
+  {
+    "name": "perfume",
+    "vectorParams": [
+      {
+        "length": "16",
+        "N": "1300",
+        "D": "7272720"
+      },
+      {
+        "length": "4",
+        "N": "6100",
+        "D": "7272720"
+      },
+      {
+        "length": "1",
+        "N": "-6100",
+        "D": "7272720"
+      },
+      {
+        "length": "16",
+        "N": "13",
+        "D": "72730"
+      },
+      {
+        "length": "16",
+        "N": "13",
+        "D": "72724"
+      },
+      {
+        "length": "4",
+        "N": "61",
+        "D": "72732"
+      },
+      {
+        "length": "4",
+        "N": "61",
+        "D": "72722"
+      },
+      {
+        "length": "1",
+        "N": "-61",
+        "D": "72734"
+      },
+      {
+        "length": "1",
+        "N": "-61",
+        "D": "72720"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "2909088",
+    "drawSpeed": "1200",
+    "colorSegments": [
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          17,
+          0
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "1"
+  },
+  {
+    "name": "baby bonnet",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "-17",
+        "D": "72000"
+      },
+      {
+        "length": "-1",
+        "N": "17",
+        "D": "72000"
+      },
+      {
+        "length": "-1",
+        "N": "-17",
+        "D": "72000"
+      },
+      {
+        "length": "1",
+        "N": "17",
+        "D": "72000"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "-17",
+        "D": "3601"
+      },
+      {
+        "length": "-1",
+        "N": "17",
+        "D": "3604"
+      },
+      {
+        "length": "-1",
+        "N": "-17",
+        "D": "3605"
+      },
+      {
+        "length": "1",
+        "N": "17",
+        "D": "3609"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "72000",
+    "drawSpeed": "285",
+    "colorSegments": [
+      {
+        "length": 50,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 50,
+        "pixelColor": [
+          0,
+          17,
+          255
+        ]
+      },
+      {
+        "length": 50,
+        "pixelColor": [
+          241,
+          244,
+          205
+        ]
+      },
+      {
+        "length": 50,
+        "pixelColor": [
+          146,
+          69,
+          69
+        ]
+      }
+    ],
+    "colorStep": "167"
+  },
+  {
+    "name": "bud",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-1",
+        "N": "-2691",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-1",
+        "N": "3289",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216008"
+      },
+      {
+        "length": "-1",
+        "N": "-2691",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "299",
+        "D": "216010"
+      },
+      {
+        "length": "-1",
+        "N": "3289",
+        "D": "215990"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "1000000",
+    "drawSpeed": "960",
+    "colorSegments": [
+      {
+        "length": 1000,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 900,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          85,
+          121,
+          121
+        ]
+      },
+      {
+        "length": 900,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          238,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 900,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "71"
   }
 ]
