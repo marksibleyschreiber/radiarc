@@ -7,14 +7,34 @@ const stopHistory = new Map();
 let vectors = [];
 let nominalCycleLength = 0n;
 let trail= [];
-let trailLength = 0;
 let posted = 0;
 let time = -1;
 let onsize = 0;
 let cycleLength = time + 1;
 let maxTrailLength = 0;
-var lastTL = maxTrailLength;
+let lastTL = maxTrailLength;
 let pixelSize = 2;
+let scaleFactor;
+let maxrad;
+let minrad;
+let refreshRate = 1024;
+let refresh = 0;
+
+// Utility
+function mapTrack() {
+    const register = [];
+//     var invalid = 0;
+    stopHistory.forEach((stop, sKey) => {
+/*
+       let dz = stopHistory.get(sKey).dz;
+ */
+       let dz = stop.dz;
+       while (register.length <= dz) register.push(0);
+       register[dz] += 1;
+    });
+//     console.log("mapTrack - undefined:", invalid);
+    console.log("mapTrack:", register);
+}
 
 // Color control variables
 window.colorSegments = window.colorSegments || [{ length: 1, pixelColor: [255, 0, 0] }];
@@ -54,17 +74,6 @@ function zParseInt(val, fallback) {
     return isNaN(n) ? fallback : n;
 }
 
-// Concatenate color segments
-function buildColorArray(segments) {
-    let arr = [];
-    segments.forEach(seg => {
-        for (let i = 0; i < seg.length; i++) {
-            arr.push(seg.pixelColor);
-        }
-    });
-    return arr;
-}
-
 function setup() {
     const parentDiv = document.getElementById('p5canvas');
     const cs = window.getComputedStyle(parentDiv);
@@ -101,9 +110,14 @@ function resetVectors() {
     nominalCycleLength = LCM;
     pixelSize = zParseInt(document.getElementById('pixelSize').value, 1);
     let len = zParseInt(document.getElementById('snakeLength').value, 0);
-    if (!isNaN(len) && len >= 0) maxTrailLength = len;
+    if (!isNaN(len) && len >= 0) {
+        maxTrailLength = LCM < BigInt(2**53) ? Math.min(len, Number(LCM)) : len;
+    }
     if ( maxTrailLength != lastTL && (maxTrailLength === 0 || lastTL === 0)) {
         background(30);
+        stopHistory.clear();
+        trail = [];
+        time = -1;
     }
     lastTL = maxTrailLength;
 }
@@ -121,12 +135,18 @@ function draw() {
 
     // Live vector updates from controls
     resetVectors();
+/*
+    maxrad = zParseInt(document.getElementById('maxrad-stat').value, 0);
+ */
 
     // Margin-aware scaling for radii
-    let totalNominal = vectors.reduce((sum, v) => sum + Math.abs(v.radius), 0);
+    let gtZero = vectors.reduce((sum, v) => sum + (v.radius > 0 ? v.radius : 0), 0);
+    let ltZero = vectors.reduce((sum, v) => sum - (v.radius < 0 ? v.radius : 0), 0);
+//     let totalNominal = Math.hypot(gtZero, ltZero);
+    let totalNominal = gtZero + ltZero;
     let pixelAdj = (pixelSize / 2) - 1;
     let maxRadius = (Math.min(width, height) / 2) - MARGIN - pixelAdj;
-    let scaleFactor = totalNominal !== 0 ? maxRadius / totalNominal : 0;
+    scaleFactor = totalNominal !== 0 ? maxRadius / totalNominal : maxRadius / 4;
 
     // Live color update from colorSettings
     updateColorConfig();
@@ -136,87 +156,103 @@ function draw() {
     if (vectors.length > 0 && colorBarLength > 0 && drawSpeed > 0) {
         var colorIndex;
         var resetClock;
-        if (maxTrailLength < 1) {
-            for (let step = 0; step < drawSpeed; step++) {
-                resetClock = 1;
-                let _x = centerX, _y = centerY;
-                for (let v of vectors) {
-                    let m = ((time + 1) * v.N) % v.D;
-                    if (m !== 0 ) resetClock = 0;
-                    let angle = v.initialAngle + m;
-                    let radius = scaleFactor * v.radius;
-                    _x += radius * Math.cos((TWO_PI * angle) / v.D);
-                    _y += radius * Math.sin((TWO_PI * angle) / v.D);
+        let excess = 0;
+        for (let step = 0; step < drawSpeed; step++) {
+            // Eliminate excess pixel
+            if (maxTrailLength > 0 && trail.length - excess >= maxTrailLength) {
+                let stop = trail[excess]; let sKey = `${stop.xx},${stop.yy}`;
+                excess += 1;
+/*
+if (sKey === '325,368') {
+    mapTrack();
+    console.log("excess load", time, "stop:", stopHistory.get(sKey).dz);
+}
+ */
+                while (stopHistory.get(sKey).dz < 1
+                && trail.length - excess >= maxTrailLength)
+                {
+                    stop = trail[excess]; sKey = `${stop.xx},${stop.yy}`;
+                    excess += 1;
                 }
-                let rounded = roundXY(_x, _y);
+                erasePixel(stop.xx, stop.yy, stopHistory.get(sKey).pz);
+/*
+                stopHistory.get(sKey).dz = 0;
+                stopHistory.get(sKey).pz = 0;
+ */
+                stopHistory.get(sKey).dz -= 1;
+            }
+            if (maxTrailLength < 1 || trail.length - excess < maxTrailLength) {
+                let dart = {resetClock: 1, _x: centerX, _y: centerY};
+                getDart(dart);
+                let rounded = roundXY(dart._x, dart._y);
                 let head = { xx: rounded._x, yy: rounded._y, pixelSize };
                 colorIndex = ((time + 1) * colorStep) % colorBarLength;
                 drawPixel(head, colorIndex);
+                if (maxTrailLength > 0) trail.push(head);
                 let sKey = `${head.xx},${head.yy}`;
-                if (!stopHistory.has(sKey)) stopHistory.set(sKey, { dz: 0, pz: 0 });
+                if (!stopHistory.has(sKey)) {
+                    stopHistory.set(sKey, { dz: 0, pz: 0, _x: head.xx, _y:head.yy });
+                }
                 stopHistory.get(sKey).dz += 1;
                 let pz = stopHistory.get(sKey).pz;
                 stopHistory.get(sKey).pz = Math.max(pz, head.pixelSize);
-                if (resetClock) {
+/*
+if (sKey === '325,368') {
+    console.log("head push", time, "stop:", stopHistory.get(sKey).dz);
+}
+ */
+                if (dart.resetClock) {
                     cycleLength = time + 1;
                     time = -1;
                 }
                 time += 1;
+                if (time % refreshRate === 0) refresh = 1;
             }
         }
-        else {
-            let excess = 0;
-            for (let step = 0; step < drawSpeed; step++) {
-                // Eliminate excess pixel
-                if (trail.length - excess >= maxTrailLength) {
-                    let stop = trail[excess];
-                    excess += 1;
-                    while (stopHistory.get(`${stop.xx},${stop.yy}`).dz < 1 && trail.length - excess >= maxTrailLength)
-                    {
-                        stop = trail[excess];
-                        excess += 1;
-                    }
-                    erasePixel(stop.xx, stop.yy, stopHistory.get(`${stop.xx},${stop.yy}`).pz);
-                    stopHistory.get(`${stop.xx},${stop.yy}`).dz = 0;
-                    stopHistory.get(`${stop.xx},${stop.yy}`).pz = 0;
-                }
-                // Get new targeted pixel stop
-                if (trail.length - excess < maxTrailLength) {
-                    resetClock = 1;
-                    let _x = centerX, _y = centerY;
-                    for (let v of vectors) {
-                        let m = ((time + 1) * v.N) % v.D;
-                        if (m !== 0 ) resetClock = 0;
-                        let angle = v.initialAngle + m;
-                        let radius = scaleFactor * v.radius;
-                        _x += radius * Math.cos((TWO_PI * angle) / v.D);
-                        _y += radius * Math.sin((TWO_PI * angle) / v.D);
-                    }
-                    let rounded = roundXY(_x, _y);
-                    let head = { xx: rounded._x, yy: rounded._y, pixelSize };
-                    colorIndex = ((time + 1) * colorStep) % colorBarLength;
-                    drawPixel(head, colorIndex);
-                    trail.push(head);
-                    let sKey = `${head.xx},${head.yy}`;
-                    if (!stopHistory.has(sKey)) stopHistory.set(sKey, { dz: 0, pz: 0 });
-                    stopHistory.get(sKey).dz += 1;
-                    let pz = stopHistory.get(sKey).pz;
-                    stopHistory.get(sKey).pz = Math.max(pz, head.pixelSize);
-                    // Update cycle counts
-                    if (resetClock) {
-                        cycleLength = time + 1;
-                        time = -1;
-                    }
-                    time += 1;
+        if (excess > 0) {
+            let detail = trail.splice(0, excess);
+// console.log("trail splice:", time, "length:", detail.length);
+            for (let stop of detail) {
+                let sKey = `${stop.xx},${stop.yy}`;
+                if (stopHistory.has(sKey)
+                && stopHistory.get(sKey).dz < 1) {
+/*
+if (sKey === '325,368') {
+    console.log("tail removal", time, "stop:", stopHistory.get(sKey).dz);
+}
+ */
+                    stopHistory.delete(sKey);
                 }
             }
-            trail.splice(0, excess);
+        }
+        if (refresh) {
+            maxrad = -1;
+            minrad = -1;
+            stopHistory.forEach((stop, sKey) => {
+                let _rad = Math.round(Math.hypot(stop._x - centerX, stop._y - centerY));
+                maxrad = Math.max(maxrad, _rad);
+                minrad = (minrad === -1) ? _rad : Math.min(minrad, _rad);
+            });
+            refresh = 0;
         }
     }
     document.getElementById('lcm-stat').textContent = nominalCycleLength.toString();
     document.getElementById('time-stat').textContent = time;
+    document.getElementById('maxrad-stat').textContent = `${minrad}-${maxrad}`;
     document.getElementById('posted-stat').textContent = stopHistory.size;
     document.getElementById('length-stat').textContent = trail.length;
+}
+
+// Calculate where to draw the next pixel.
+function getDart(dart) {
+    for (let v of vectors) {
+        let m = ((time + 1) * v.N) % v.D;
+        if (m !== 0 ) dart.resetClock = 0;
+        let angle = v.initialAngle + m;
+        let radius = scaleFactor * v.radius;
+        dart._x += radius * Math.cos((TWO_PI * angle) / v.D);
+        dart._y += radius * Math.sin((TWO_PI * angle) / v.D);
+    }
 }
 
 // Draw pixel using color array (from colorSegments)
@@ -258,5 +294,4 @@ function clearAndReset() {
     stopHistory.clear();
     posted = 0;
     onsize = 0;
-//     n = 0;
 }

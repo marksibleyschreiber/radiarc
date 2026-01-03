@@ -653,6 +653,11 @@
         "length": "1000",
         "N": "-2889",
         "D": "1439"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
@@ -676,8 +681,7 @@
         ]
       }
     ],
-    "colorStep": 26,
-    "colorIndex": 0
+    "colorStep": "32"
   },
   {
     "name": "slow",
@@ -862,6 +866,11 @@
         "length": "-10",
         "N": "-3",
         "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "2",
@@ -893,8 +902,7 @@
         ]
       }
     ],
-    "colorStep": 6000,
-    "colorIndex": 0
+    "colorStep": "6000"
   },
   {
     "name": "Jazz 45",
@@ -1551,82 +1559,6 @@
       }
     ],
     "colorStep": 50,
-    "colorIndex": 0
-  },
-  {
-    "name": "Big Heart",
-    "vectorParams": [
-      {
-        "length": "1",
-        "N": "1",
-        "D": "10001"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "9999"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "9999"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "10001"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "999"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "1000"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "2005"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "2005"
-      }
-    ],
-    "pixelSize": "1",
-    "snakeLength": "150000",
-    "drawSpeed": "500",
-    "colorSegments": [
-      {
-        "length": 55550,
-        "pixelColor": [
-          255,
-          0,
-          0
-        ]
-      },
-      {
-        "length": 55550,
-        "pixelColor": [
-          102,
-          0,
-          255
-        ]
-      },
-      {
-        "length": 55550,
-        "pixelColor": [
-          0,
-          225,
-          255
-        ]
-      }
-    ],
-    "colorStep": "555",
     "colorIndex": 0
   },
   {
@@ -3103,13 +3035,13 @@
     "vectorParams": [
       {
         "length": "3",
-        "N": "10",
-        "D": "14399"
+        "N": "205",
+        "D": "14394"
       },
       {
         "length": "3",
-        "N": "-299",
-        "D": "14401"
+        "N": "-204",
+        "D": "14406"
       },
       {
         "length": "1",
@@ -3152,7 +3084,7 @@
     "drawSpeed": "3000",
     "colorSegments": [
       {
-        "length": 2880,
+        "length": 288000,
         "pixelColor": [
           255,
           0,
@@ -3160,7 +3092,7 @@
         ]
       },
       {
-        "length": 2880,
+        "length": 288000,
         "pixelColor": [
           102,
           0,
@@ -3168,7 +3100,7 @@
         ]
       },
       {
-        "length": 2880,
+        "length": 288000,
         "pixelColor": [
           255,
           221,
@@ -3176,7 +3108,7 @@
         ]
       },
       {
-        "length": 5760,
+        "length": 576000,
         "pixelColor": [
           30,
           0,
@@ -3184,7 +3116,7 @@
         ]
       }
     ],
-    "colorStep": "869"
+    "colorStep": "3025198"
   },
   {
     "name": "coloraster",
@@ -4997,5 +4929,397 @@
       }
     ],
     "colorStep": "71"
+  },
+  {
+    "name": "tequila-81",
+    "vectorParams": [
+      {
+        "length": "2",
+        "N": "2",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "17",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "-19",
+        "D": "21600"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "216031"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "215969"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "216029"
+      },
+      {
+        "length": "1",
+        "N": "100",
+        "D": "215971"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "0",
+    "drawSpeed": "4000",
+    "colorSegments": [
+      {
+        "length": 600,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 501,
+        "pixelColor": [
+          115,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 200,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 600,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 200,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 500,
+        "pixelColor": [
+          115,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 200,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "81"
+  },
+  {
+    "name": "cognac",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "1",
+        "D": "46080"
+      },
+      {
+        "length": "1",
+        "N": "25",
+        "D": "46080"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "46087"
+      },
+      {
+        "length": "-1",
+        "N": "1",
+        "D": "46073"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "0",
+    "drawSpeed": "800",
+    "colorSegments": [
+      {
+        "length": 46080,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 4608,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 46080,
+        "pixelColor": [
+          241,
+          244,
+          205
+        ]
+      },
+      {
+        "length": 4608,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 46080,
+        "pixelColor": [
+          30,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 4608,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "924"
+  },
+  {
+    "name": "sketch-2",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "100101",
+        "D": "2160000"
+      },
+      {
+        "length": "1",
+        "N": "10101",
+        "D": "216000"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "720000",
+    "drawSpeed": "800",
+    "colorSegments": [
+      {
+        "length": 50,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 50,
+        "pixelColor": [
+          0,
+          17,
+          255
+        ]
+      },
+      {
+        "length": 50,
+        "pixelColor": [
+          241,
+          244,
+          205
+        ]
+      },
+      {
+        "length": 50,
+        "pixelColor": [
+          146,
+          69,
+          69
+        ]
+      }
+    ],
+    "colorStep": "450"
+  },
+  {
+    "name": "well worn",
+    "vectorParams": [
+      {
+        "length": "1",
+        "N": "1",
+        "D": "7200"
+      },
+      {
+        "length": "1",
+        "N": "500000",
+        "D": "1900000"
+      },
+      {
+        "length": "1",
+        "N": "-1",
+        "D": "7201"
+      },
+      {
+        "length": "-1",
+        "N": "-500000",
+        "D": "1900001"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "800000",
+    "drawSpeed": "4000",
+    "colorSegments": [
+      {
+        "length": 1900000,
+        "pixelColor": [
+          0,
+          255,
+          51
+        ]
+      },
+      {
+        "length": 1900000,
+        "pixelColor": [
+          187,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 1900000,
+        "pixelColor": [
+          241,
+          244,
+          205
+        ]
+      },
+      {
+        "length": 1900000,
+        "pixelColor": [
+          146,
+          69,
+          69
+        ]
+      }
+    ],
+    "colorStep": "19000"
   }
 ]

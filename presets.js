@@ -109,6 +109,9 @@ function loadPreset(index) {
         renderColorSegments();
     }
 
+    // --- INITIALIZE STATISTICS ---
+    document.getElementById('maxrad-stat').value = 0;
+
     if (typeof saveSettings === 'function') saveSettings();
     if (typeof loadSettings === "function") loadSettings();
 
