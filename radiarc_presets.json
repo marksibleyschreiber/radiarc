@@ -41,11 +41,29 @@
         "length": "1",
         "N": "1",
         "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "4",
     "snakeLength": "31",
-    "drawSpeed": "5"
+    "drawSpeed": "5",
+    "timeUnit": "1",
+    "pixelThickness": "1",
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "1"
   },
   {
     "name": "fascinated",
@@ -94,6 +112,8 @@
     "pixelSize": "1",
     "snakeLength": "27359",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1,
@@ -149,11 +169,29 @@
         "length": "1000",
         "N": "-2889",
         "D": "1440"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
     "snakeLength": "27359",
-    "drawSpeed": "600"
+    "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "1"
   },
   {
     "name": "crashing",
@@ -197,11 +235,29 @@
         "length": "1000",
         "N": "-2889",
         "D": "1439"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
     "snakeLength": "27359",
-    "drawSpeed": "600"
+    "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
+    "colorSegments": [
+      {
+        "length": 1,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "1"
   },
   {
     "name": "crashing2",
@@ -250,6 +306,8 @@
     "pixelSize": "1",
     "snakeLength": "92735",
     "drawSpeed": "300",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1,
@@ -310,6 +368,8 @@
     "pixelSize": "1",
     "snakeLength": "1000000",
     "drawSpeed": "300",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 10,
@@ -386,6 +446,8 @@
     "pixelSize": "1",
     "snakeLength": "10000",
     "drawSpeed": "100",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1,
@@ -446,6 +508,8 @@
     "pixelSize": "1",
     "snakeLength": "27359",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -514,6 +578,8 @@
     "pixelSize": "1",
     "snakeLength": "27359",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -582,6 +648,8 @@
     "pixelSize": "1",
     "snakeLength": "10000",
     "drawSpeed": "110",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 200,
@@ -663,6 +731,8 @@
     "pixelSize": "1",
     "snakeLength": "27359",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -682,74 +752,6 @@
       }
     ],
     "colorStep": "32"
-  },
-  {
-    "name": "slow",
-    "vectorParams": [
-      {
-        "length": "1",
-        "N": "1",
-        "D": "10000"
-      },
-      {
-        "length": "1",
-        "N": "-1",
-        "D": "10000"
-      },
-      {
-        "length": "1",
-        "N": "3",
-        "D": "10000"
-      },
-      {
-        "length": "1",
-        "N": "-4",
-        "D": "10000"
-      },
-      {
-        "length": "1",
-        "N": "5",
-        "D": "10000"
-      },
-      {
-        "length": "1",
-        "N": "-6",
-        "D": "10000"
-      },
-      {
-        "length": "1",
-        "N": "10",
-        "D": "20005"
-      },
-      {
-        "length": "1",
-        "N": "-10",
-        "D": "20005"
-      }
-    ],
-    "pixelSize": "1",
-    "snakeLength": "10000",
-    "drawSpeed": "500",
-    "colorSegments": [
-      {
-        "length": 20005,
-        "pixelColor": [
-          255,
-          0,
-          0
-        ]
-      },
-      {
-        "length": 20005,
-        "pixelColor": [
-          102,
-          0,
-          255
-        ]
-      }
-    ],
-    "colorStep": 1800,
-    "colorIndex": 0
   },
   {
     "name": "dancedance",
@@ -803,6 +805,8 @@
     "pixelSize": "1",
     "snakeLength": "5000",
     "drawSpeed": "500",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 20005,
@@ -876,6 +880,8 @@
     "pixelSize": "2",
     "snakeLength": "2000",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 20005,
@@ -951,6 +957,8 @@
     "pixelSize": "1",
     "snakeLength": "1152000",
     "drawSpeed": "610",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -1024,6 +1032,8 @@
     "pixelSize": "1",
     "snakeLength": "48000",
     "drawSpeed": "3000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -1088,6 +1098,8 @@
     "pixelSize": "1",
     "snakeLength": "468000",
     "drawSpeed": "1100",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 200,
@@ -1163,6 +1175,8 @@
     "pixelSize": "1",
     "snakeLength": "100000",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 10,
@@ -1239,6 +1253,8 @@
     "pixelSize": "1",
     "snakeLength": "100000",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 2000,
@@ -1315,6 +1331,8 @@
     "pixelSize": "1",
     "snakeLength": "150000",
     "drawSpeed": "500",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 55550,
@@ -1391,6 +1409,8 @@
     "pixelSize": "1",
     "snakeLength": "1300000",
     "drawSpeed": "410",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 100,
@@ -1464,6 +1484,8 @@
     "pixelSize": "1",
     "snakeLength": "363636",
     "drawSpeed": "500",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 2100,
@@ -1524,6 +1546,8 @@
     "pixelSize": "1",
     "snakeLength": "240000",
     "drawSpeed": "400",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -1608,6 +1632,8 @@
     "pixelSize": "1",
     "snakeLength": "50000",
     "drawSpeed": "350",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 600,
@@ -1679,11 +1705,18 @@
         "length": "1",
         "N": "1246",
         "D": "400003"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
-    "pixelSize": "1",
+    "pixelSize": "4",
     "snakeLength": "100000",
     "drawSpeed": "200",
+    "timeUnit": "11",
+    "pixelThickness": "1000",
     "colorSegments": [
       {
         "length": 600,
@@ -1710,8 +1743,7 @@
         ]
       }
     ],
-    "colorStep": 178,
-    "colorIndex": 0
+    "colorStep": "185"
   },
   {
     "name": "The Grand Muky Muky",
@@ -1765,6 +1797,8 @@
     "pixelSize": "1",
     "snakeLength": "200000",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 600,
@@ -1841,6 +1875,8 @@
     "pixelSize": "4",
     "snakeLength": "360",
     "drawSpeed": "1",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1,
@@ -1896,11 +1932,18 @@
         "length": "1",
         "N": "1",
         "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "10",
     "snakeLength": "4",
     "drawSpeed": "1",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1,
@@ -1911,8 +1954,7 @@
         ]
       }
     ],
-    "colorStep": "",
-    "colorIndex": 0
+    "colorStep": "1"
   },
   {
     "name": "element-8s",
@@ -1961,6 +2003,8 @@
     "pixelSize": "1",
     "snakeLength": "21600",
     "drawSpeed": "300",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -2029,6 +2073,8 @@
     "pixelSize": "1",
     "snakeLength": "21600",
     "drawSpeed": "300",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -2097,6 +2143,8 @@
     "pixelSize": "1",
     "snakeLength": "5400000",
     "drawSpeed": "2000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 5400,
@@ -2173,6 +2221,8 @@
     "pixelSize": "1",
     "snakeLength": "9331198",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1001,
@@ -2257,6 +2307,8 @@
     "pixelSize": "1",
     "snakeLength": "4000000",
     "drawSpeed": "1000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 601,
@@ -2341,6 +2393,8 @@
     "pixelSize": "1",
     "snakeLength": "360",
     "drawSpeed": "38",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 100,
@@ -2401,6 +2455,8 @@
     "pixelSize": "2",
     "snakeLength": "5760",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 100,
@@ -2477,6 +2533,8 @@
     "pixelSize": "1",
     "snakeLength": "21600",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -2550,6 +2608,8 @@
     "pixelSize": "1",
     "snakeLength": "7200",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -2622,6 +2682,8 @@
     "pixelSize": "1",
     "snakeLength": "21600",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1500,
@@ -2702,6 +2764,8 @@
     "pixelSize": "1",
     "snakeLength": "2160000",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1500,
@@ -2777,6 +2841,8 @@
     "pixelSize": "1",
     "snakeLength": "172200",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 100,
@@ -2853,6 +2919,8 @@
     "pixelSize": "1",
     "snakeLength": "18000000",
     "drawSpeed": "800",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -2929,6 +2997,8 @@
     "pixelSize": "1",
     "snakeLength": "43200",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -3000,8 +3070,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "4000",
+    "snakeLength": "1300000",
+    "drawSpeed": "1600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -3080,8 +3152,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "1000000",
     "drawSpeed": "3000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 288000,
@@ -3117,94 +3191,6 @@
       }
     ],
     "colorStep": "3025198"
-  },
-  {
-    "name": "coloraster",
-    "vectorParams": [
-      {
-        "length": "1",
-        "N": "301",
-        "D": "216000"
-      },
-      {
-        "length": "1",
-        "N": "-8729",
-        "D": "216000"
-      },
-      {
-        "length": "1",
-        "N": "301",
-        "D": "216000"
-      },
-      {
-        "length": "1",
-        "N": "9331",
-        "D": "216000"
-      },
-      {
-        "length": "1",
-        "N": "301",
-        "D": "216031"
-      },
-      {
-        "length": "1",
-        "N": "-8729",
-        "D": "215971"
-      },
-      {
-        "length": "1",
-        "N": "301",
-        "D": "216031"
-      },
-      {
-        "length": "1",
-        "N": "9331",
-        "D": "215971"
-      },
-      {
-        "length": "1",
-        "N": "1",
-        "D": "0"
-      }
-    ],
-    "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "600",
-    "colorSegments": [
-      {
-        "length": 1500,
-        "pixelColor": [
-          251,
-          255,
-          0
-        ]
-      },
-      {
-        "length": 1501,
-        "pixelColor": [
-          119,
-          19,
-          241
-        ]
-      },
-      {
-        "length": 1500,
-        "pixelColor": [
-          242,
-          99,
-          99
-        ]
-      },
-      {
-        "length": 4500,
-        "pixelColor": [
-          30,
-          0,
-          0
-        ]
-      }
-    ],
-    "colorStep": "464"
   },
   {
     "name": "allday",
@@ -3248,11 +3234,18 @@
         "length": "5",
         "N": "-3",
         "D": "999997"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "6680000",
     "drawSpeed": "4000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 100,
@@ -3287,8 +3280,7 @@
         ]
       }
     ],
-    "colorStep": "250100",
-    "colorIndex": 0
+    "colorStep": "250100"
   },
   {
     "name": "The Rainbow Nebula",
@@ -3342,6 +3334,8 @@
     "pixelSize": "1",
     "snakeLength": "3000000",
     "drawSpeed": "1000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -3429,8 +3423,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "500000",
     "drawSpeed": "1000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -3465,97 +3461,7 @@
         ]
       }
     ],
-    "colorStep": "2028",
-    "colorIndex": 0
-  },
-  {
-    "name": "whirlware",
-    "vectorParams": [
-      {
-        "length": "1",
-        "N": "1000",
-        "D": "3600000"
-      },
-      {
-        "length": "1",
-        "N": "-1001",
-        "D": "3600000"
-      },
-      {
-        "length": "1",
-        "N": "10000",
-        "D": "72001"
-      },
-      {
-        "length": "1",
-        "N": "90001",
-        "D": "72003"
-      },
-      {
-        "length": "",
-        "N": "",
-        "D": ""
-      },
-      {
-        "length": "",
-        "N": "",
-        "D": ""
-      },
-      {
-        "length": "",
-        "N": "",
-        "D": ""
-      },
-      {
-        "length": "",
-        "N": "",
-        "D": ""
-      },
-      {
-        "length": "1",
-        "N": "1000",
-        "D": "3590000"
-      }
-    ],
-    "pixelSize": "1",
-    "snakeLength": "405000",
-    "drawSpeed": "1000",
-    "colorSegments": [
-      {
-        "length": 50,
-        "pixelColor": [
-          255,
-          0,
-          0
-        ]
-      },
-      {
-        "length": 50,
-        "pixelColor": [
-          0,
-          17,
-          255
-        ]
-      },
-      {
-        "length": 50,
-        "pixelColor": [
-          241,
-          244,
-          205
-        ]
-      },
-      {
-        "length": 50,
-        "pixelColor": [
-          146,
-          69,
-          69
-        ]
-      }
-    ],
-    "colorStep": "2028",
-    "colorIndex": 0
+    "colorStep": "2028"
   },
   {
     "name": "blank",
@@ -3609,6 +3515,8 @@
     "pixelSize": "1",
     "snakeLength": "1000",
     "drawSpeed": "400",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -3696,8 +3604,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "1600",
+    "snakeLength": "2160000",
+    "drawSpeed": "810",
+    "timeUnit": "1",
+    "pixelThickness": "50",
     "colorSegments": [
       {
         "length": 5000,
@@ -3800,8 +3710,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "2000",
+    "snakeLength": "5000000",
+    "drawSpeed": "6000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 65537,
@@ -3872,8 +3784,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "1600000",
     "drawSpeed": "750",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 30000,
@@ -3944,8 +3858,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "3500000",
     "drawSpeed": "4000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 600,
@@ -4004,8 +3920,7 @@
         ]
       }
     ],
-    "colorStep": "16",
-    "colorIndex": 0
+    "colorStep": "16"
   },
   {
     "name": "snoopy",
@@ -4059,6 +3974,8 @@
     "pixelSize": "1",
     "snakeLength": "21600",
     "drawSpeed": "400",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -4124,6 +4041,8 @@
     "pixelSize": "1",
     "snakeLength": "2000",
     "drawSpeed": "200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -4189,6 +4108,8 @@
     "pixelSize": "1",
     "snakeLength": "8600",
     "drawSpeed": "1000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 2100,
@@ -4268,8 +4189,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "1000",
+    "snakeLength": "5000000",
+    "drawSpeed": "1800",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -4340,8 +4263,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "216000",
     "drawSpeed": "600",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1500,
@@ -4420,8 +4345,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "600",
+    "snakeLength": "2000000",
+    "drawSpeed": "500",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 5000,
@@ -4525,7 +4452,9 @@
     ],
     "pixelSize": "1",
     "snakeLength": "43200",
-    "drawSpeed": "2000",
+    "drawSpeed": "900",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -4598,6 +4527,8 @@
     "pixelSize": "1",
     "snakeLength": "1536000",
     "drawSpeed": "3000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -4686,6 +4617,8 @@
     "pixelSize": "1",
     "snakeLength": "2909088",
     "drawSpeed": "1200",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 420000,
@@ -4790,6 +4723,8 @@
     "pixelSize": "1",
     "snakeLength": "72000",
     "drawSpeed": "285",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -4878,6 +4813,8 @@
     "pixelSize": "1",
     "snakeLength": "1000000",
     "drawSpeed": "960",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1000,
@@ -4980,11 +4917,13 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
+    "snakeLength": "3500000",
     "drawSpeed": "4000",
+    "timeUnit": "20",
+    "pixelThickness": "1",
     "colorSegments": [
       {
-        "length": 600,
+        "length": 21600,
         "pixelColor": [
           255,
           0,
@@ -4992,7 +4931,7 @@
         ]
       },
       {
-        "length": 501,
+        "length": 21600,
         "pixelColor": [
           115,
           0,
@@ -5000,7 +4939,7 @@
         ]
       },
       {
-        "length": 200,
+        "length": 16200,
         "pixelColor": [
           30,
           0,
@@ -5008,7 +4947,7 @@
         ]
       },
       {
-        "length": 600,
+        "length": 21600,
         "pixelColor": [
           255,
           0,
@@ -5016,7 +4955,7 @@
         ]
       },
       {
-        "length": 200,
+        "length": 21600,
         "pixelColor": [
           30,
           0,
@@ -5024,7 +4963,7 @@
         ]
       },
       {
-        "length": 500,
+        "length": 21600,
         "pixelColor": [
           115,
           0,
@@ -5032,7 +4971,7 @@
         ]
       },
       {
-        "length": 200,
+        "length": 16200,
         "pixelColor": [
           30,
           0,
@@ -5040,7 +4979,7 @@
         ]
       }
     ],
-    "colorStep": "81"
+    "colorStep": "1"
   },
   {
     "name": "cognac",
@@ -5092,8 +5031,10 @@
       }
     ],
     "pixelSize": "1",
-    "snakeLength": "0",
-    "drawSpeed": "800",
+    "snakeLength": "8400000",
+    "drawSpeed": "8400",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 46080,
@@ -5198,6 +5139,8 @@
     "pixelSize": "1",
     "snakeLength": "720000",
     "drawSpeed": "800",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 50,
@@ -5286,6 +5229,8 @@
     "pixelSize": "1",
     "snakeLength": "800000",
     "drawSpeed": "4000",
+    "timeUnit": "1",
+    "pixelThickness": "1",
     "colorSegments": [
       {
         "length": 1900000,
@@ -5321,5 +5266,487 @@
       }
     ],
     "colorStep": "19000"
+  },
+  {
+    "name": "honey",
+    "vectorParams": [
+      {
+        "length": "-24",
+        "N": "1",
+        "D": "46080"
+      },
+      {
+        "length": "-24",
+        "N": "25",
+        "D": "46080"
+      },
+      {
+        "length": "-24",
+        "N": "1",
+        "D": "46087"
+      },
+      {
+        "length": "2",
+        "N": "1",
+        "D": "46073"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "4608000",
+    "drawSpeed": "8000",
+    "timeUnit": "5",
+    "pixelThickness": "300",
+    "colorSegments": [
+      {
+        "length": 46080,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 4608,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 46080,
+        "pixelColor": [
+          241,
+          244,
+          205
+        ]
+      },
+      {
+        "length": 4608,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 46080,
+        "pixelColor": [
+          30,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 4608,
+        "pixelColor": [
+          30,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "924"
+  },
+  {
+    "name": "incense",
+    "vectorParams": [
+      {
+        "length": "16",
+        "N": "1300",
+        "D": "7272720"
+      },
+      {
+        "length": "4",
+        "N": "6100",
+        "D": "7272720"
+      },
+      {
+        "length": "1",
+        "N": "-6100",
+        "D": "7272720"
+      },
+      {
+        "length": "16",
+        "N": "13",
+        "D": "72730"
+      },
+      {
+        "length": "16",
+        "N": "13",
+        "D": "72724"
+      },
+      {
+        "length": "4",
+        "N": "61",
+        "D": "72732"
+      },
+      {
+        "length": "4",
+        "N": "61",
+        "D": "72722"
+      },
+      {
+        "length": "1",
+        "N": "-61",
+        "D": "72734"
+      },
+      {
+        "length": "1",
+        "N": "-61",
+        "D": "72720"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "2909088",
+    "drawSpeed": "800",
+    "timeUnit": "5",
+    "pixelThickness": "300",
+    "colorSegments": [
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          17,
+          0
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "6"
+  },
+  {
+    "name": "See Thing",
+    "vectorParams": [
+      {
+        "length": "19",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-19",
+        "N": "-2691",
+        "D": "216000"
+      },
+      {
+        "length": "19",
+        "N": "299",
+        "D": "216000"
+      },
+      {
+        "length": "-19",
+        "N": "3289",
+        "D": "216000"
+      },
+      {
+        "length": "19",
+        "N": "299",
+        "D": "216008"
+      },
+      {
+        "length": "-19",
+        "N": "-2691",
+        "D": "215992"
+      },
+      {
+        "length": "19",
+        "N": "299",
+        "D": "216010"
+      },
+      {
+        "length": "-19",
+        "N": "3289",
+        "D": "215990"
+      },
+      {
+        "length": "7",
+        "N": "1",
+        "D": "12"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "86400",
+    "drawSpeed": "600",
+    "timeUnit": "21654",
+    "pixelThickness": "1",
+    "colorSegments": [
+      {
+        "length": 1000,
+        "pixelColor": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 1501,
+        "pixelColor": [
+          157,
+          105,
+          221
+        ]
+      }
+    ],
+    "colorStep": "2"
+  },
+  {
+    "name": "circles",
+    "vectorParams": [
+      {
+        "length": "4",
+        "N": "36",
+        "D": "720"
+      },
+      {
+        "length": "4",
+        "N": "-36",
+        "D": "720"
+      },
+      {
+        "length": "2",
+        "N": "180",
+        "D": "3603"
+      },
+      {
+        "length": "2",
+        "N": "-180",
+        "D": "3597"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      },
+      {
+        "length": "1",
+        "N": "1",
+        "D": "0"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "1536000",
+    "drawSpeed": "300",
+    "timeUnit": "19",
+    "pixelThickness": "2000",
+    "colorSegments": [
+      {
+        "length": 1000,
+        "pixelColor": [
+          195,
+          197,
+          243
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          238,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          95,
+          109,
+          242
+        ]
+      },
+      {
+        "length": 1000,
+        "pixelColor": [
+          0,
+          255,
+          170
+        ]
+      }
+    ],
+    "colorStep": "219"
+  },
+  {
+    "name": "incense-2",
+    "vectorParams": [
+      {
+        "length": "16",
+        "N": "1300",
+        "D": "7272720"
+      },
+      {
+        "length": "4",
+        "N": "6100",
+        "D": "7272720"
+      },
+      {
+        "length": "1",
+        "N": "-6100",
+        "D": "7272720"
+      },
+      {
+        "length": "16",
+        "N": "13",
+        "D": "72730"
+      },
+      {
+        "length": "16",
+        "N": "13",
+        "D": "72724"
+      },
+      {
+        "length": "4",
+        "N": "61",
+        "D": "72732"
+      },
+      {
+        "length": "4",
+        "N": "61",
+        "D": "72722"
+      },
+      {
+        "length": "1",
+        "N": "-61",
+        "D": "72734"
+      },
+      {
+        "length": "1",
+        "N": "-61",
+        "D": "72720"
+      }
+    ],
+    "pixelSize": "1",
+    "snakeLength": "2909088",
+    "drawSpeed": "800",
+    "timeUnit": "5",
+    "pixelThickness": "300",
+    "colorSegments": [
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          17,
+          0
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          0,
+          255
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      },
+      {
+        "length": 420000,
+        "pixelColor": [
+          255,
+          255,
+          0
+        ]
+      },
+      {
+        "length": 70000,
+        "pixelColor": [
+          20,
+          0,
+          0
+        ]
+      }
+    ],
+    "colorStep": "66600"
   }
 ]

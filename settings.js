@@ -56,6 +56,8 @@ function saveSettings() {
     localStorage.setItem('pixelSize', document.getElementById('pixelSize').value);
     localStorage.setItem('snakeLength', document.getElementById('snakeLength').value);
     localStorage.setItem('drawSpeed', document.getElementById('drawSpeed').value);
+    localStorage.setItem('timeUnit', document.getElementById('timeUnit').value);
+    localStorage.setItem('pixelThickness', document.getElementById('pixelThickness').value);
     localStorage.setItem('presetName', document.getElementById('presetName').value);
     localStorage.setItem('colorSegments', JSON.stringify(window.colorSegments));
     localStorage.setItem('colorStep', document.getElementById('colorStep').value);
@@ -84,6 +86,12 @@ function loadSettings() {
     if (!isNaN(snakeLength) && snakeLength >= 0) document.getElementById('snakeLength').value = snakeLength;
     let drawSpeed = localStorage.getItem('drawSpeed');
     if (!isNaN(drawSpeed) && drawSpeed >= 0) document.getElementById('drawSpeed').value = drawSpeed;
+    let timeUnit = localStorage.getItem('timeUnit');
+    timeUnit = timeUnit && timeUnit >= 0 ? timeUnit : 1;
+    document.getElementById('timeUnit').value = timeUnit;
+    let pixelThickness = localStorage.getItem('pixelThickness');
+    pixelThickness = pixelThickness && pixelThickness >= 1 ? pixelThickness : 1;
+    document.getElementById('pixelThickness').value = pixelThickness;
     // Load preset name
     let presetName = localStorage.getItem('presetName');
     if (presetName) document.getElementById('presetName').value = presetName;

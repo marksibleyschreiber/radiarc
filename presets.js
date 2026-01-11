@@ -3,6 +3,7 @@
  * Handles saving, loading, listing, deleting, exporting, and importing presets via localStorage and JSON files.
  */
 
+window.time = -1;
 const PRESETS_STORAGE_KEY = "radiarc_setting_presets";
 
 // Helper to flash/highlight updated input fields for visibility
@@ -35,6 +36,8 @@ function savePreset(name) {
     let pixelSize = document.getElementById('pixelSize').value;
     let snakeLength = document.getElementById('snakeLength').value;
     let drawSpeed = document.getElementById('drawSpeed').value;
+    let timeUnit = document.getElementById('timeUnit').value;
+    let pixelThickness = document.getElementById('pixelThickness').value;
 
     // --- NOW SAVE CURRENT COLOR SETTINGS ---
     let colorSegments = Array.isArray(window.colorSegments)
@@ -53,6 +56,8 @@ function savePreset(name) {
         pixelSize,
         snakeLength,
         drawSpeed,
+        timeUnit,
+        pixelThickness,
         colorSegments, // Save user's actual color segments
         colorStep      // Save user's actual colorStep
     };
@@ -96,6 +101,10 @@ function loadPreset(index) {
     flashInput('snakeLength');
     document.getElementById('drawSpeed').value = preset.drawSpeed;
     flashInput('drawSpeed');
+    document.getElementById('timeUnit').value = preset.timeUnit;
+    flashInput('timeUnit');
+    document.getElementById('pixelThickness').value = preset.pixelThickness;
+    flashInput('pixelThickness');
 
     // --- RESTORE COLOR SETTINGS FROM PRESET ---
     window.colorSegments = Array.isArray(preset.colorSegments)
@@ -108,9 +117,6 @@ function loadPreset(index) {
     if (typeof renderColorSegments === "function") {
         renderColorSegments();
     }
-
-    // --- INITIALIZE STATISTICS ---
-    document.getElementById('maxrad-stat').value = 0;
 
     if (typeof saveSettings === 'function') saveSettings();
     if (typeof loadSettings === "function") loadSettings();
@@ -206,6 +212,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const idx = document.getElementById('presetList').value;
             if (idx === "" || idx == null) return;
             loadPreset(Number(idx));
+            window.time = -1;
         };
     }
     const delBtn = document.getElementById('deletePresetBtn');

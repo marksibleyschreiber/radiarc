@@ -22,7 +22,6 @@ function renderColorSegments() {
         lenInput.style.width = '90px';
         lenInput.oninput = (e) => {
             window.colorSegments[idx].length = parseInt(e.target.value) || 1;
-            updateColorConfig();
         };
 
         // Color input
@@ -32,7 +31,6 @@ function renderColorSegments() {
         colorInput.style.marginLeft = '7px';
         colorInput.oninput = (e) => {
             window.colorSegments[idx].pixelColor = hexToRgb(e.target.value);
-            updateColorConfig();
         };
 
         // Delete button
@@ -42,7 +40,6 @@ function renderColorSegments() {
         delBtn.onclick = () => {
             window.colorSegments.splice(idx, 1);
             renderColorSegments();
-            updateColorConfig();
         };
 
         row.appendChild(lenInput);
@@ -69,7 +66,6 @@ function hexToRgb(hex) {
 function addColorSegment() {
     window.colorSegments.push({ length: 10, pixelColor: [255, 0, 0] }); // Default: 10 red
     renderColorSegments();
-    updateColorConfig();
 }
 
 // Update color config in sketch.js
