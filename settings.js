@@ -2,9 +2,63 @@
 
 window.vectorCount = 9;
 
-// Utility to pause and resume animation safely
+// ✨ Settings cache + dirty flag
+window.settingsCache = {
+    vectorParams: [],
+    pixelSize: 1,
+    snakeLength: 0,
+    drawSpeed: 0,
+    timeUnit: 1,
+    pixelThickness: 1,
+    colorSegments: [{ length: 1, pixelColor: [255, 0, 0] }],
+    colorStep: 1
+};
+
+window.settingsDirty = true; // ✨ Flag to trigger resetVectors only when needed
+
 function pauseAnimation() { if (typeof noLoop === "function") noLoop(); }
 function resumeAnimation() { if (typeof loop === "function") loop(); }
+
+function syncCacheFromDOM() {
+    let vectorParams = [];
+    for (let i = 0; i < window.vectorCount; i++) {
+        vectorParams.push({
+            length: document.getElementById(`length${i}`).value,
+            N: document.getElementById(`N${i}`).value,
+            D: document.getElementById(`D${i}`).value
+        });
+    }
+    window.settingsCache = {
+        vectorParams,
+        pixelSize: document.getElementById('pixelSize').value,
+        snakeLength: document.getElementById('snakeLength').value,
+        drawSpeed: document.getElementById('drawSpeed').value,
+        timeUnit: document.getElementById('timeUnit').value,
+        pixelThickness: document.getElementById('pixelThickness').value,
+        colorSegments: window.colorSegments,
+        colorStep: document.getElementById('colorStep').value
+    };
+    window.settingsDirty = true; // ✨ Mark as dirty when changed
+}
+
+function syncDOMFromCache() {
+    const cache = window.settingsCache;
+    for (let i = 0; i < window.vectorCount; i++) {
+        if (i < cache.vectorParams.length) {
+            document.getElementById(`length${i}`).value = cache.vectorParams[i].length;
+            document.getElementById(`N${i}`).value = cache.vectorParams[i].N;
+            document.getElementById(`D${i}`).value = cache.vectorParams[i].D;
+        }
+    }
+    document.getElementById('pixelSize').value = cache.pixelSize;
+    document.getElementById('snakeLength').value = cache.snakeLength;
+    document.getElementById('drawSpeed').value = cache.drawSpeed;
+    document.getElementById('timeUnit').value = cache.timeUnit;
+    document.getElementById('pixelThickness').value = cache.pixelThickness;
+    document.getElementById('colorStep').value = cache.colorStep;
+    window.colorSegments = cache.colorSegments;
+    if (typeof renderColorSegments === "function") renderColorSegments();
+}
 
 window.addEventListener('DOMContentLoaded', function() {
     let tbody = document.querySelector("#vector-controls tbody");
@@ -20,7 +74,19 @@ window.addEventListener('DOMContentLoaded', function() {
     }
     loadSettings();
 
-    // Toggle settings window
+    // Attach change listeners
+    for (let i = 0; i < window.vectorCount; i++) {
+        document.getElementById(`length${i}`).addEventListener('input', syncCacheFromDOM);
+        document.getElementById(`N${i}`).addEventListener('input', syncCacheFromDOM);
+        document.getElementById(`D${i}`).addEventListener('input', syncCacheFromDOM);
+    }
+    document.getElementById('pixelSize').addEventListener('input', syncCacheFromDOM);
+    document.getElementById('snakeLength').addEventListener('input', syncCacheFromDOM);
+    document.getElementById('drawSpeed').addEventListener('input', syncCacheFromDOM);
+    document.getElementById('timeUnit').addEventListener('input', syncCacheFromDOM);
+    document.getElementById('pixelThickness').addEventListener('input', syncCacheFromDOM);
+    document.getElementById('colorStep').addEventListener('input', syncCacheFromDOM);
+
     const settingsDiv = document.getElementById('controls');
     const toggleBtn = document.getElementById('control-toggle');
     toggleBtn.onclick = () => {
@@ -45,64 +111,53 @@ function getStartingColorStep() {
 
 function saveSettings() {
     pauseAnimation();
-    let vectorParams = [];
-    for (let i = 0; i < window.vectorCount; i++) {
-        const length = document.getElementById(`length${i}`).value;
-        const N = document.getElementById(`N${i}`).value;
-        const D = document.getElementById(`D${i}`).value;
-        vectorParams.push({ length, N, D });
-    }
-    localStorage.setItem('vectorParams', JSON.stringify(vectorParams));
-    localStorage.setItem('pixelSize', document.getElementById('pixelSize').value);
-    localStorage.setItem('snakeLength', document.getElementById('snakeLength').value);
-    localStorage.setItem('drawSpeed', document.getElementById('drawSpeed').value);
-    localStorage.setItem('timeUnit', document.getElementById('timeUnit').value);
-    localStorage.setItem('pixelThickness', document.getElementById('pixelThickness').value);
+    syncCacheFromDOM();
+    localStorage.setItem('vectorParams', JSON.stringify(window.settingsCache.vectorParams));
+    localStorage.setItem('pixelSize', window.settingsCache.pixelSize);
+    localStorage.setItem('snakeLength', window.settingsCache.snakeLength);
+    localStorage.setItem('drawSpeed', window.settingsCache.drawSpeed);
+    localStorage.setItem('timeUnit', window.settingsCache.timeUnit);
+    localStorage.setItem('pixelThickness', window.settingsCache.pixelThickness);
     localStorage.setItem('presetName', document.getElementById('presetName').value);
-    localStorage.setItem('colorSegments', JSON.stringify(window.colorSegments));
-    localStorage.setItem('colorStep', document.getElementById('colorStep').value);
+    localStorage.setItem('colorSegments', JSON.stringify(window.settingsCache.colorSegments));
+    localStorage.setItem('colorStep', window.settingsCache.colorStep);
     resumeAnimation();
 }
 
 function loadSettings() {
     let vectorParams = [];
     try {
-      vectorParams = JSON.parse(localStorage.getItem('vectorParams'));
+        vectorParams = JSON.parse(localStorage.getItem('vectorParams'));
     } catch (e) {}
+    
+    window.settingsCache.vectorParams = vectorParams || [];
     for (let i = 0; i < window.vectorCount; i++) {
-        if (vectorParams && vectorParams[i] && i < vectorParams.length) {
-            document.getElementById(`length${i}`).value = vectorParams[i].length ?? 1;
-            document.getElementById(`N${i}`).value = vectorParams[i].N ?? 1;
-            document.getElementById(`D${i}`).value = vectorParams[i].D ?? 0;
-        } else {
-            document.getElementById(`length${i}`).value = 1;
-            document.getElementById(`N${i}`).value = 1;
-            document.getElementById(`D${i}`).value = 0;
+        if (!window.settingsCache.vectorParams[i]) {
+            window.settingsCache.vectorParams[i] = { length: 1, N: 1, D: 0 };
         }
     }
-    let pixelSize = localStorage.getItem('pixelSize');
-    if (pixelSize) document.getElementById('pixelSize').value = pixelSize;
-    let snakeLength = localStorage.getItem('snakeLength');
-    if (!isNaN(snakeLength) && snakeLength >= 0) document.getElementById('snakeLength').value = snakeLength;
-    let drawSpeed = localStorage.getItem('drawSpeed');
-    if (!isNaN(drawSpeed) && drawSpeed >= 0) document.getElementById('drawSpeed').value = drawSpeed;
-    let timeUnit = localStorage.getItem('timeUnit');
-    timeUnit = timeUnit && timeUnit >= 0 ? timeUnit : 1;
-    document.getElementById('timeUnit').value = timeUnit;
-    let pixelThickness = localStorage.getItem('pixelThickness');
-    pixelThickness = pixelThickness && pixelThickness >= 1 ? pixelThickness : 1;
-    document.getElementById('pixelThickness').value = pixelThickness;
-    // Load preset name
-    let presetName = localStorage.getItem('presetName');
-    if (presetName) document.getElementById('presetName').value = presetName;
-    if (presetName) document.getElementById('title-stat').value = presetName;
-    // Load color settings
+    
+    window.settingsCache.pixelSize = localStorage.getItem('pixelSize') || 1;
+    window.settingsCache.snakeLength = localStorage.getItem('snakeLength') || 0;
+    window.settingsCache.drawSpeed = localStorage.getItem('drawSpeed') || 0;
+    window.settingsCache.timeUnit = localStorage.getItem('timeUnit') || 1;
+    window.settingsCache.pixelThickness = localStorage.getItem('pixelThickness') || 1;
+    
     try {
         let cs = JSON.parse(localStorage.getItem('colorSegments'));
-        if (Array.isArray(cs)) window.colorSegments = cs;
+        if (Array.isArray(cs)) window.settingsCache.colorSegments = cs;
     } catch (e) {}
-    let step = localStorage.getItem('colorStep');
-    document.getElementById('colorStep').value = step;
-    if (typeof renderColorSegments === "function") renderColorSegments();
+    
+    window.settingsCache.colorStep = localStorage.getItem('colorStep') || 1;
+    
+    syncDOMFromCache();
+    
+    let presetName = localStorage.getItem('presetName');
+    if (presetName) {
+        document.getElementById('presetName').value = presetName;
+        document.getElementById('title-stat').value = presetName;
+    }
+    
     if (typeof updateColorConfig === "function") updateColorConfig();
+    window.settingsDirty = true; // ✨ Mark dirty after load
 }

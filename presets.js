@@ -1,17 +1,13 @@
 /**
  * Preset management for Radiarc Epicycle Snake.
- * Handles saving, loading, listing, deleting, exporting, and importing presets via localStorage and JSON files.
+ * ✨ OPTIMIZED: Load directly into settingsCache, bypassing DOM reads
  */
 
 window.time = -1;
 const PRESETS_STORAGE_KEY = "radiarc_setting_presets";
 
-// Helper to flash/highlight updated input fields for visibility
 function flashInput(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.backgroundColor = "#ccedff";
-    setTimeout(() => { el.style.backgroundColor = ""; }, 450);
+    // Keep as-is or remove if not needed
 }
 
 function getPresets() {
@@ -24,43 +20,25 @@ function getPresets() {
 
 function savePreset(name) {
     pauseAnimation();
-    // Collect settings from current UI
-    let vectorParams = [];
-    for (let i = 0; i < window.vectorCount; i++) {
-        vectorParams.push({
-            length: document.getElementById(`length${i}`).value,
-            N: document.getElementById(`N${i}`).value,
-            D: document.getElementById(`D${i}`).value
-        });
-    }
-    let pixelSize = document.getElementById('pixelSize').value;
-    let snakeLength = document.getElementById('snakeLength').value;
-    let drawSpeed = document.getElementById('drawSpeed').value;
-    let timeUnit = document.getElementById('timeUnit').value;
-    let pixelThickness = document.getElementById('pixelThickness').value;
-
-    // --- NOW SAVE CURRENT COLOR SETTINGS ---
-    let colorSegments = Array.isArray(window.colorSegments)
-        ? window.colorSegments.map(seg =>
-            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor)
-            ? [...seg.pixelColor] : [255, 0, 0] })) // Deep copy
-        : [{ length: 1, pixelColor: [255, 0, 0] }];
+    syncCacheFromDOM(); // Ensure cache reflects current state
 
     let presets = getPresets();
     let idx = presets.findIndex(p => p.name === name);
-    let colorStep = document.getElementById('colorStep').value;
-//     let colorIndex = 0;
+
+    // ✨ Save directly from cache
     let presetObj = {
         name,
-        vectorParams,
-        pixelSize,
-        snakeLength,
-        drawSpeed,
-        timeUnit,
-        pixelThickness,
-        colorSegments, // Save user's actual color segments
-        colorStep      // Save user's actual colorStep
+        vectorParams: window.settingsCache.vectorParams,
+        pixelSize: window.settingsCache.pixelSize,
+        snakeLength: window.settingsCache.snakeLength,
+        drawSpeed: window.settingsCache.drawSpeed,
+        timeUnit: window.settingsCache.timeUnit,
+        pixelThickness: window.settingsCache.pixelThickness,
+        colorSegments: window.settingsCache.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: [...seg.pixelColor] })),
+        colorStep: window.settingsCache.colorStep
     };
+
     if (idx !== -1) {
         presets[idx] = presetObj;
     } else {
@@ -75,52 +53,38 @@ function loadPreset(index) {
     pauseAnimation();
     let presets = getPresets();
     let preset = presets[index];
-    if (!preset) {
-        resumeAnimation();
-        return;
-    }
+    if (!preset) return;
+
+    // ✨ Load directly into cache (NO DOM reads!)
+    window.settingsCache = {
+        vectorParams: preset.vectorParams.map(v => ({...v})),
+        pixelSize: preset.pixelSize,
+        snakeLength: preset.snakeLength,
+        drawSpeed: preset.drawSpeed,
+        timeUnit: preset.timeUnit,
+        pixelThickness: preset.pixelThickness,
+        colorSegments: preset.colorSegments.map(seg =>
+            ({ length: seg.length, pixelColor: [...seg.pixelColor] })),
+        colorStep: preset.colorStep
+    };
+
+    resetVectors();
+    window.settingsDirty = false;
+
+/*
+    clear();
+    drawingContext.imageSmoothingEnabled = false;
+    window.time = -1;
+    background(30);
+ */
+
+    // Update DOM for display only
+    syncDOMFromCache();
+
     document.getElementById('presetName').value = preset.name;
     document.getElementById('title-stat').value = preset.name;
-    for (let i = 0; i < window.vectorCount; i++) {
-        if (i < preset.vectorParams.length) {
-            document.getElementById(`length${i}`).value = preset.vectorParams[i].length;
-            document.getElementById(`N${i}`).value = preset.vectorParams[i].N;
-            document.getElementById(`D${i}`).value = preset.vectorParams[i].D;
-        } else {
-            document.getElementById(`length${i}`).value = 1;
-            document.getElementById(`N${i}`).value = 1;
-            document.getElementById(`D${i}`).value = 0;
-        }
-        flashInput(`length${i}`);
-        flashInput(`N${i}`);
-        flashInput(`D${i}`);
-    }
-    document.getElementById('pixelSize').value = preset.pixelSize;
-    flashInput('pixelSize');
-    document.getElementById('snakeLength').value = preset.snakeLength;
-    flashInput('snakeLength');
-    document.getElementById('drawSpeed').value = preset.drawSpeed;
-    flashInput('drawSpeed');
-    document.getElementById('timeUnit').value = preset.timeUnit;
-    flashInput('timeUnit');
-    document.getElementById('pixelThickness').value = preset.pixelThickness;
-    flashInput('pixelThickness');
-
-    // --- RESTORE COLOR SETTINGS FROM PRESET ---
-    window.colorSegments = Array.isArray(preset.colorSegments)
-        ? preset.colorSegments.map(seg =>
-            ({ length: seg.length, pixelColor: Array.isArray(seg.pixelColor)
-            ? [...seg.pixelColor] : [255, 0, 0] }))
-        : [{ length: 1, pixelColor: [255, 0, 0] }];
-    document.getElementById('colorStep').value = preset.colorStep;
-    // Re-render color segments UI if the function is available
-    if (typeof renderColorSegments === "function") {
-        renderColorSegments();
-    }
 
     if (typeof saveSettings === 'function') saveSettings();
-    if (typeof loadSettings === "function") loadSettings();
-
     resumeAnimation();
 }
 
@@ -150,11 +114,10 @@ function refreshPresetList() {
     });
 }
 
-// Export settings to JSON file
 function exportPresets() {
     pauseAnimation();
     const presets = getPresets();
-    const data = JSON.stringify(presets, null, 2); // Pretty print
+    const data = JSON.stringify(presets, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -167,7 +130,6 @@ function exportPresets() {
     resumeAnimation();
 }
 
-// Import settings from JSON file
 function importPresets(event) {
     pauseAnimation();
     const file = event.target.files[0];
@@ -194,7 +156,7 @@ function importPresets(event) {
     reader.readAsText(file);
 }
 
-// Attach UI event handlers when DOM is ready
+// Event handlers (keep as-is)
 window.addEventListener('DOMContentLoaded', () => {
     const saveBtn = document.getElementById('savePresetBtn');
     if (saveBtn) {
@@ -211,8 +173,7 @@ window.addEventListener('DOMContentLoaded', () => {
         loadBtn.onclick = () => {
             const idx = document.getElementById('presetList').value;
             if (idx === "" || idx == null) return;
-            loadPreset(Number(idx));
-            window.time = -1;
+            setTimeout(() => loadPreset(Number(idx)), 0);
         };
     }
     const delBtn = document.getElementById('deletePresetBtn');
